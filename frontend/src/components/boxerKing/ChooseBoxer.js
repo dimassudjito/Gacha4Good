@@ -1,13 +1,15 @@
 import React from 'react'
 
-import { Container, Box } from '@mui/material'
+import { Box } from '@mui/material'
 
 import BoxerCard from './BoxerCard'
 
-const ChooseBoxer = () => {
+const ChooseBoxer = ({ boxers }) => {
   return (
     <Box>
-      <BoxerCard />
+      {boxers.map((boxer) => (
+        <BoxerCard key={boxer.name} boxer={boxer} />
+      ))}
     </Box>
   )
 }
