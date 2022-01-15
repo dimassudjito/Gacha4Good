@@ -1,4 +1,15 @@
-import { Game } from "./Game.js";
+import mongoose from "mongoose";
+import { Game, GameRoom } from "./Game.js";
+
+const GAME_ID = 1;
+
+const boxingKingAction = new mongoose.Schema({
+    timestamp: Date,
+    action: {
+        type: String,
+        enum: ["ROCK", "PAPER", "SCISSORS"],
+    },
+});
 
 const boxingKingCardSchema = new mongoose.Schema({
     name: String,
@@ -19,4 +30,9 @@ const boxingKingSchema = new mongoose.Schema({
     shop: [boxingKingCardPackSchema],
 });
 
+const boxingKingGameRoomSchema = new mongoose.Schema({
+    actions: [boxingKingGameAction],
+});
+
 export const BoxingKingGame = Game.discriminator("BoxingKing", boxingKingSchema);
+export const BoxingKingGameRoom = GameRoom.discriminator(GAME_ID, boxingKingGameRoomSchema);
