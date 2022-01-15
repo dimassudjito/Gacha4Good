@@ -1,10 +1,17 @@
 import React from 'react'
 
-const BoxerKing = () => {
-    return (
-        <h1> this is BoxerKing</h1>
-    )
-}
+import { Container, Box } from '@mui/material'
 
+import ChooseBoxer from '../components/boxerKing/ChooseBoxer'
+
+const BoxerKing = () => {
+  return (
+    <Box>
+      <Container maxWidth="md">
+        <ChooseBoxer />
+      </Container>
+    </Box>
+  )
+}
 
 export default BoxerKing
