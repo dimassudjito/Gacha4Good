@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { Container, Box } from '@mui/material'
 
-import ChooseBoxer from '../components/boxerKing/ChooseBoxer'
+// import ChooseBoxer from '../components/boxerKing/ChooseBoxer'
 
 const dummyBoxerData = [
   {
@@ -25,7 +25,7 @@ const BoxerKing = () => {
   return (
     <Box>
       <Container maxWidth="md">
-        <ChooseBoxer boxers={dummyBoxerData} />
+        {/* <ChooseBoxer boxers={dummyBoxerData} /> */}
       </Container>
     </Box>
   )
