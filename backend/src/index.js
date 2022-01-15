@@ -1,11 +1,12 @@
 import { ApolloServer } from "apollo-server";
 import mongoose from "mongoose";
+import { resolvers, types } from "./gql.js";
 
 const PORT = process.env.PORT || 5555;
 
 const server = new ApolloServer({
-    types,
-    resolvers,
+    typeDefs: types,
+    resolvers: resolvers,
 });
 
 mongoose
