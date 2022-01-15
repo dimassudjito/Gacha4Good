@@ -1,10 +1,16 @@
 import React from 'react'
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Link, BrowserRouter as Router, Route, Routes } from "react-router-dom";
 //import pages
+import Coin from './pages/Coin';
+import Inventory from './pages/Inventory';
+import Marketplace from './pages/Marketplace';
+import BoxerKing from './pages/BoxerKing';
 import Dashboard from './pages/Dashboard';
+
 // MUI theme configuration
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+
 const theme = createTheme({
   palette: {
     primary: {
@@ -23,7 +29,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Dashboard />
+      <Router>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          <Route path="/coin" element={<Coin />} />
+          <Route path="/inventory" element={<Inventory />} />
+          <Route path="/marketplace" element={<Marketplace />} />
+          <Route path="/BoxerKing" element={<BoxerKing />} />
+        </Routes>
+      </Router>
     </ThemeProvider>
   )
 }
