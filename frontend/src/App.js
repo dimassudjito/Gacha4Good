@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link, BrowserRouter as Router, Route, Routes } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 //import pages
 import Coin from './pages/Coin'
 import Inventory from './pages/Inventory'
