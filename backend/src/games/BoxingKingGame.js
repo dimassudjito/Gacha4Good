@@ -1,9 +1,9 @@
 import mongoose from "mongoose";
-import { Game, GameRoom } from "./Game.js";
+import { Game, GameRoom } from "../models/Game.js";
 
 const GAME_ID = 1;
 
-const boxingKingAction = new mongoose.Schema({
+const boxingKingGameAction = new mongoose.Schema({
     timestamp: Date,
     action: {
         type: String,
