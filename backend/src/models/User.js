@@ -1,36 +1,28 @@
 import mongoose from "mongoose";
 
+const schema = new mongoose.Schema({
+    username: String,
+    password: String,
+    balance: Number,
+});
+
 class UserClass {
-    get username() {
-        return this.username;
-    }
-
-    set balance(new_value) {
-        this.balance = new_value;
-    }
-
-    get balance() {
-        return this.balance;
-    }
-
-    // set inventory() {
-
-    // }
-
-    // get inventory() {
-    //     return this.inventory
-    // }
-
     static CreateUser(username, password) {
         const newUser = new User({ username: username, password: password, balance: 100 });
 
         newUser.save();
     }
 
-    static LogIn(username, password) {
-        return this.findOne({ username: username, password: password });
+    static async LogIn(username, password) {
+        try {
+            const foundUser = await User.findOne({ username: username, password: password }).exec();
+
+            return foundUser;
+        } catch (ex) {
+            console.log(`Error: ${ex} while in LogIn function.`);
+        }
     }
 }
 
-const schema = new mongoose.Schema();
-export const User = schema.loadClass(UserClass);
+schema.loadClass(UserClass);
+export const User = mongoose.model("User", schema);
