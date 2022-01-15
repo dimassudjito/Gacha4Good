@@ -1,21 +1,20 @@
 {
-  "name": "backend",
-  "version": "1.0.0",
-  "description": "lul",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "",
-  "license": "ISC",
-  "devDependencies": {
-    "@types/node": "^17.0.8"
-  },
-  "dependencies": {
-    "apollo-server": "^3.6.1",
-    "graphql": "^16.2.0",
-    "mongodb": "^3.7.3",
-    "reflect-metadata": "^0.1.13",
-    "typeorm": "^0.2.41"
-  }
+    "name": "backend",
+    "version": "1.0.0",
+    "description": "lul",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "@types/node": "^17.0.8"
+    },
+    "dependencies": {
+        "apollo-server": "^3.6.1",
+        "graphql": "^16.2.0",
+        "mongodb": "^3.7.3",
+        "mongoose": "^6.1.6"
+    }
 }
