@@ -5,17 +5,14 @@ import {
     Authorized,
     Ctx,
     Field,
-    FieldResolver,
     InputType,
     Mutation,
     ObjectType,
     Query,
     Resolver,
-    Root,
     UnauthorizedError,
 } from "type-graphql";
-import { BoxingCardModel } from "../model/game";
-import { CardInventory, User, UserModel } from "../model/user";
+import { User, UserModel } from "../model/user";
 import { AuthorizedContext, TokenCache } from "./auth";
 
 @InputType()
@@ -110,42 +107,39 @@ export class UserResolver {
         return new AuthorizedUser(ctx.user, ctx.token);
     }
 
-    @Authorized()
-    @Mutation(() => AuthorizedUser)
-    async deleteCard(
-        @Ctx() ctx: AuthorizedContext,
-        @Arg("cardId") cardId: string,
-        @Arg("count") count: number
-    ) {
-        const card = await BoxingCardModel.findById(cardId);
-        if (ctx.user.inventory.has(card)) {
-            const newCount = ctx.user.inventory.get(card) - count;
-            ctx.user.inventory.set(card, newCount);
-        }
-        await ctx.user.save();
-        return new AuthorizedUser(ctx.user, ctx.token);
-    }
+    // @Authorized()
+    // @Mutation(() => AuthorizedUser)
+    // async deleteCard(
+    //     @Ctx() ctx: AuthorizedContext,
+    //     @Arg("cardId") cardId: string,
+    //     @Arg("count") count: number
+    // ) {
+    //     // const card = await BoxingCardModel.findById(cardId);
 
-    @FieldResolver()
-    async inventory(@Root() user: DocumentType<User>): Promise<Array<CardInventory>> {
-        if (!user.inventory) {
-            return [];
-        }
+    //     await ctx.user.save();
+    //     return new AuthorizedUser(ctx.user, ctx.token);
+    // }
 
-        const cardRefs = Array.from(user.inventory.keys());
-        const cardCounts = Array.from(user.inventory.values());
-        const cardPromises = cardRefs.map((cardRef) => {
-            return BoxingCardModel.findById(cardRef);
-        });
+    // @FieldResolver()
+    // async inventory(@Root() user: DocumentType<User>): Promise<Array<Ref<BoxingCard>>> {
+    //     if (!user.inventory) {
+    //         return [];
+    //     }
 
-        const resolvedCards = await Promise.all(cardPromises);
+    //     const cardRefs = Array.from(user.inventory.keys());
+    //     const cardCounts = Array.from(user.inventory.values());
+    //     const cardPromises = cardRefs.map((cardRef) => {
+    //         return BoxingCardModel.findById(cardRef);
+    //     });
 
-        let outputArray = [];
+    //     const resolvedCards = await Promise.all(cardPromises);
 
-        for (let i = 0; i < resolvedCards.length; i++) {
-            outputArray.push({ card: resolvedCards[i], rate: cardCounts[i] });
-        }
+    //     let outputArray = [];
 
-        return outputArray;
-    }
+    //     for (let i = 0; i < resolvedCards.length; i++) {
+    //         outputArray.push({ card: resolvedCards[i], rate: cardCounts[i] });
+    //     }
+
+    //     return outputArray;
+    // }
 }

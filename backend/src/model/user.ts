@@ -5,15 +5,6 @@ import { Authorized, Field, ID, ObjectType } from "type-graphql";
 import { BoxingCard } from "./game";
 
 @ObjectType()
-export class CardInventory {
-    @Field()
-    public card: BoxingCard;
-
-    @Field()
-    public count: number;
-}
-
-@ObjectType()
 export class User {
     @Authorized()
     @Field(() => ID)
@@ -33,9 +24,9 @@ export class User {
     public balance: number = 0;
 
     @Authorized()
-    @Field(() => [CardInventory])
-    @prop({ ref: () => BoxingCard })
-    public inventory?: Map<Ref<BoxingCard>, number>;
+    @Field(() => [BoxingCard])
+    @prop()
+    public inventory?: Array<Ref<BoxingCard>>;
 
     public static async findByPassword(
         username: string,
@@ -58,14 +49,9 @@ export class User {
 
     public addCard(newCard: Ref<BoxingCard>) {
         if (!this.inventory) {
-            this.inventory = new Map<Ref<BoxingCard>, number>();
+            this.inventory = [];
         }
-        if (this.inventory.has(newCard)) {
-            const existingCount = this.inventory.get(newCard);
-            this.inventory.set(newCard, existingCount + 1);
-        } else {
-            this.inventory.set(newCard, 1);
-        }
+        this.inventory.push(newCard);
     }
 }
 
