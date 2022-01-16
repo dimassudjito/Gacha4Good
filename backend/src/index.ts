@@ -3,7 +3,6 @@ import { ApolloServer } from "apollo-server";
 import dotenv from "dotenv";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
-import { parseRequest, tokenCheck } from "./service/auth";
 import { BoxingGameResolver } from "./service/game";
 import { UserResolver } from "./service/user";
 
@@ -13,13 +12,11 @@ const PORT = process.env.PORT || 5555;
 async function startServer() {
     const schema = await buildSchema({
         resolvers: [UserResolver, BoxingGameResolver],
-        authChecker: tokenCheck,
         emitSchemaFile: true,
     });
 
     const server = new ApolloServer({
         schema,
-        context: parseRequest,
     });
 
     const { url } = await server.listen(PORT);

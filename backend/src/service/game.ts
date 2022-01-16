@@ -5,6 +5,7 @@ import {
     Field,
     FieldResolver,
     InputType,
+    Int,
     Maybe,
     Mutation,
     Query,
@@ -23,10 +24,10 @@ export class NewBoxingCard {
     @Field()
     public name!: string;
 
-    @Field()
+    @Field(() => Int)
     public healthPoints!: number;
 
-    @Field()
+    @Field(() => Int)
     public attackPower!: number;
 
     @Field()

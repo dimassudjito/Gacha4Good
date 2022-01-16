@@ -2,7 +2,6 @@ import { DocumentType } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server-core";
 import {
     Arg,
-    Ctx,
     Field,
     FieldResolver,
     InputType,
@@ -15,7 +14,6 @@ import {
 } from "type-graphql";
 import { BoxingCard, BoxingCardModel } from "../model/game";
 import { User, UserModel } from "../model/user";
-import { AuthorizedContext, TokenCache } from "./auth";
 
 @InputType()
 class NewUserInput {
@@ -55,17 +53,6 @@ export class UserResolver {
         return user;
     }
 
-    @Mutation(() => Boolean)
-    async logout(@Ctx() ctx: AuthorizedContext): Promise<boolean> {
-        try {
-            TokenCache.delete(ctx.token);
-        } catch (ex) {
-            console.log(ex);
-            return false;
-        }
-        return true;
-    }
-
     @Mutation(() => AuthorizedUser)
     async login(
         @Arg("username") username: string,
@@ -75,7 +62,6 @@ export class UserResolver {
             const user = await UserModel.findByPassword(username, password);
             const token = await User.generateToken(user);
 
-            TokenCache.set(token, user);
             return new AuthorizedUser(user, token);
         } catch (ex) {
             console.log(ex);
@@ -95,7 +81,6 @@ export class UserResolver {
         await newUser.save();
 
         const token = await User.generateToken(newUser);
-        TokenCache.set(token, newUser);
 
         return new AuthorizedUser(newUser, token);
     }
