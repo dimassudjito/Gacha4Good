@@ -79,21 +79,29 @@ const GamePlay = ({ boxers }) => {
     <Box>
       <Grid container columnSpacing={1}>
         <Grid item xs={6}>
-          <Card>
+          <Card sx={{ p: 2 }}>
             <Typography>Player 1 (Human)</Typography>
             <Typography>HP: {p1Hp}</Typography>
             <hr />
             <BoxerHead boxer={p1} />
-            <Typography>{p1Move}</Typography>
+            {p1Move ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button variant="outlined">{p1Move}</Button>
+              </Box>
+            ) : null}
           </Card>
         </Grid>
         <Grid item xs={6}>
-          <Card>
+          <Card sx={{ p: 2 }}>
             <Typography>Player 2 (Bot)</Typography>
             <Typography>HP: {p2Hp}</Typography>
             <hr />
-            <BoxerHead boxer={p2} />
-            <Typography>{p2Move}</Typography>
+            <BoxerHead boxer={p2} move={p2Move} />
+            {p2Move ? (
+              <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+                <Button variant="outlined">{p2Move}</Button>
+              </Box>
+            ) : null}
           </Card>
         </Grid>
       </Grid>
