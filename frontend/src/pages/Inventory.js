@@ -1,8 +1,10 @@
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import React from "react";
 import BoxerCard from "../components/boxerKing/BoxerCard";
+import Header from "../components/boxerKing/Header";
 
 const Inventory = () => {
     const dummyBoxerData = [
@@ -33,7 +35,6 @@ const Inventory = () => {
                 "https://boxrec.com/media/images//thumb/9/94/MikeTysonHeadshot2.jpg/250px-MikeTysonHeadshot2.jpg",
         });
     }
-    console.log(dummyBoxerData.length);
     const buttons = [
         <Button size="large" color="secondary" key="one">
             GAME 1
@@ -58,34 +59,37 @@ const Inventory = () => {
         </Button>,
     ];
     return (
-        <Grid sx={{ m: "2rem" }} container justify="center">
-            <Grid item xs={6} justify="center">
-                <ButtonGroup
-                    size="large"
-                    color="secondary"
-                    orientation="vertical"
-                    aria-label="vertical outlined button group"
-                    style={{ backgroundColor: "0x000000" }}
-                >
-                    {buttons}
-                </ButtonGroup>
-            </Grid>
-            <Grid sx={{ pr: "3rem" }} item xs={6}>
-                <Grid
-                    container
-                    spacing={2}
-                    direction="row"
-                    justify="flex-flow"
-                    alignItems="flex-flow"
-                >
-                    {dummyBoxerData.map((elem) => (
-                        <Grid item xs={12} sm={6} md={3} key={dummyBoxerData.indexOf(elem)}>
-                            <BoxerCard boxer={elem} />
-                        </Grid>
-                    ))}
+        <Box>
+            <Header />
+            <Grid sx={{ m: "2rem" }} container justify="center">
+                <Grid item xs={6} justify="center">
+                    <ButtonGroup
+                        size="large"
+                        color="secondary"
+                        orientation="vertical"
+                        aria-label="vertical outlined button group"
+                        style={{ backgroundColor: "0x000000" }}
+                    >
+                        {buttons}
+                    </ButtonGroup>
+                </Grid>
+                <Grid sx={{ pr: "3rem" }} item xs={6}>
+                    <Grid
+                        container
+                        spacing={2}
+                        direction="row"
+                        justify="flex-flow"
+                        alignItems="flex-flow"
+                    >
+                        {dummyBoxerData.map((elem) => (
+                            <Grid item xs={12} sm={6} md={3} key={dummyBoxerData.indexOf(elem)}>
+                                <BoxerCard boxer={elem} />
+                            </Grid>
+                        ))}
+                    </Grid>
                 </Grid>
             </Grid>
-        </Grid>
+        </Box>
     );
 };
 
