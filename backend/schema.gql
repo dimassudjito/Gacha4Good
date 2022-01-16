@@ -29,16 +29,10 @@ type BoxingCardRates {
   rate: Float!
 }
 
-type CardInventory {
-  card: BoxingCard!
-  count: Float!
-}
-
 type Mutation {
   addBalance(value: Float!): AuthorizedUser!
   buyPack(packId: String!): BoxingCard!
   createBoxer(boxerData: NewBoxingCard!): BoxingCard!
-  deleteCard(cardId: String!, count: Float!): AuthorizedUser!
   login(password: String!, username: String!): AuthorizedUser!
   logout: Boolean!
   newUser(newUserData: NewUserInput!): AuthorizedUser!
@@ -65,6 +59,6 @@ type Query {
 type User {
   _id: ID!
   balance: Float!
-  inventory: [CardInventory!]!
+  inventory: [BoxingCard!]!
   username: String!
 }

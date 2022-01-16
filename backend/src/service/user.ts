@@ -14,8 +14,8 @@ import {
     Root,
     UnauthorizedError,
 } from "type-graphql";
-import { BoxingCardModel } from "../model/game";
-import { CardInventory, User, UserModel } from "../model/user";
+import { BoxingCard, BoxingCardModel } from "../model/game";
+import { User, UserModel } from "../model/user";
 import { AuthorizedContext, TokenCache } from "./auth";
 
 @InputType()
@@ -110,42 +110,18 @@ export class UserResolver {
         return new AuthorizedUser(ctx.user, ctx.token);
     }
 
-    @Authorized()
-    @Mutation(() => AuthorizedUser)
-    async deleteCard(
-        @Ctx() ctx: AuthorizedContext,
-        @Arg("cardId") cardId: string,
-        @Arg("count") count: number
-    ) {
-        const card = await BoxingCardModel.findById(cardId);
-        if (ctx.user.inventory.has(card)) {
-            const newCount = ctx.user.inventory.get(card) - count;
-            ctx.user.inventory.set(card, newCount);
-        }
-        await ctx.user.save();
-        return new AuthorizedUser(ctx.user, ctx.token);
-    }
-
     @FieldResolver()
-    async inventory(@Root() user: DocumentType<User>): Promise<Array<CardInventory>> {
+    async inventory(@Root() user: DocumentType<User>): Promise<Array<BoxingCard>> {
         if (!user.inventory) {
             return [];
         }
 
-        const cardRefs = Array.from(user.inventory.keys());
-        const cardCounts = Array.from(user.inventory.values());
-        const cardPromises = cardRefs.map((cardRef) => {
+        const cardPromises = user.inventory.map((cardRef) => {
             return BoxingCardModel.findById(cardRef);
         });
 
         const resolvedCards = await Promise.all(cardPromises);
 
-        let outputArray = [];
-
-        for (let i = 0; i < resolvedCards.length; i++) {
-            outputArray.push({ card: resolvedCards[i], rate: cardCounts[i] });
-        }
-
-        return outputArray;
+        return resolvedCards;
     }
 }

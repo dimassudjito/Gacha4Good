@@ -5,21 +5,13 @@ import {
     Authorized,
     Ctx,
     Field,
-    FieldResolver,
     InputType,
     Maybe,
     Mutation,
     Query,
     Resolver,
-    Root,
 } from "type-graphql";
-import {
-    BoxingCard,
-    BoxingCardModel,
-    BoxingCardPack,
-    BoxingCardPackModel,
-    BoxingCardRates,
-} from "../model/game";
+import { BoxingCard, BoxingCardModel, BoxingCardPack, BoxingCardPackModel } from "../model/game";
 import { AuthorizedContext } from "./auth";
 
 const randBetween = (min: number, max: number) => {
@@ -49,25 +41,6 @@ export class BoxingGameResolver {
     @Query(() => [BoxingCardPack])
     async packs(): Promise<Maybe<Array<BoxingCardPack>>> {
         return await BoxingCardPackModel.find();
-    }
-
-    @FieldResolver()
-    async cards(@Root() pack: DocumentType<BoxingCardPack>): Promise<Array<BoxingCardRates>> {
-        const cardRefs = Array.from(pack.cards.keys());
-        const cardRates = Array.from(pack.cards.values());
-        const cardPromises = cardRefs.map((cardRef) => {
-            return BoxingCardModel.findById(cardRef);
-        });
-
-        const resolvedCards = await Promise.all(cardPromises);
-
-        let outputArray = [];
-
-        for (let i = 0; i < resolvedCards.length; i++) {
-            outputArray.push({ card: resolvedCards[i], rate: cardRates[i] });
-        }
-
-        return outputArray;
     }
 
     @Authorized()
