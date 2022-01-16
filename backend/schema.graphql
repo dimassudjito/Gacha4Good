@@ -1,0 +1,58 @@
+type User {
+  userId: ID!
+  username: String!
+  balance: Int!
+}
+
+interface GameData {
+  gameId: ID!
+  name: String!
+}
+
+type BoxingKingGameData implements GameData {
+  gameId: ID!
+  name: String!
+  cards: [BoxingKingGameCard!]!
+  shop: [BoxingKingCardPack!]!
+}
+
+type BoxingKingGameCard {
+  cardId: ID!
+  name: String!
+  healthPoints: Int!
+  attackPower: Int!
+  cardPicture: String!
+  headPicture: String!
+}
+
+type BoxingKingCardPack {
+  cardPackId: ID!
+  name: String!
+  price: Int!
+  cards: [CardChanceTuple!]!
+}
+
+type GameRoom {
+  gameRoomId: ID!
+  startTime: Int!
+  endTime: Int
+  players: [User]
+}
+
+type CardChanceTuple {
+  cardId: ID!
+  chance: Float
+}
+
+type Query {
+  user: User
+  gameRooms: [GameRoom]
+}
+
+type Mutation {
+  login(username: String!, password: String!): String
+  register(username: String!, password: String!): String
+  createGameRoom(gameId: ID!): GameRoom
+  joinGameRoom(gameRoomId: ID!): GameRoom
+  boxingKingSendMove(gameRoomId: ID!): GameRoom
+}
