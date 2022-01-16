@@ -1,6 +1,5 @@
 import { DocumentType, getModelForClass, mongoose, prop, Ref } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server";
-import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { Authorized, Field, ID, ObjectType } from "type-graphql";
 import { BoxingCard } from "./game";
@@ -46,14 +45,15 @@ export class User {
         if (!user) {
             throw new UserInputError("Incorrect username or password");
         }
-        if (await compare(password, user.password)) {
+
+        if (password === user.password) {
             return user;
         }
         throw new UserInputError("Incorrect username or password");
     }
 
     public static async generateToken(user: DocumentType<User>): Promise<string> {
-        return sign(user._id, process.env.SECRET_KEY);
+        return sign({ _id: user._id }, process.env.SECRET_KEY);
     }
 
     public addCard(newCard: Ref<BoxingCard>) {

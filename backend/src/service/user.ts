@@ -1,6 +1,5 @@
 import { DocumentType } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server-core";
-import { hashSync } from "bcrypt";
 import {
     Arg,
     Authorized,
@@ -93,8 +92,6 @@ export class UserResolver {
         if (existing !== 0) {
             throw new UserInputError("Username in use");
         }
-
-        user.password = hashSync(user.password, 10);
 
         const newUser = new UserModel(user);
         await newUser.save();

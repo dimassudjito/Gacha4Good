@@ -39,21 +39,6 @@ const LOGIN_USER = gql`
     }
 `;
 
-async function sha256(message) {
-    // encode as UTF-8
-    const msgBuffer = new TextEncoder().encode(message);
-
-    // hash the message
-    const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
-
-    // convert ArrayBuffer to Array
-    const hashArray = Array.from(new Uint8Array(hashBuffer));
-
-    // convert bytes to hex string
-    const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-    return hashHex;
-}
-
 const Login = () => {
     const [usernameField, setUsernameField] = useState("");
     const [passwordField, setPassword] = useState("");
@@ -62,10 +47,19 @@ const Login = () => {
     const [createPasswordField, setCreatePassword] = useState("");
     const [passwordConfirmField, setPasswordConfirm] = useState("");
 
-    const [createUser, { data, loading, error }] = useMutation(CREATE_NEW_USER);
+    const [login] = useMutation(LOGIN_USER);
+    const [createUser] = useMutation(CREATE_NEW_USER);
 
-    const loginButton = (evt) => {
+    const loginButton = async (evt) => {
         evt.preventDefault();
+        const password = createPasswordField;
+
+        login({
+            variables: {
+                username: usernameField,
+                password: password,
+            },
+        });
     };
 
     const registerButton = async (evt) => {
@@ -78,14 +72,11 @@ const Login = () => {
 
         const newUserData = {
             username: createUsernameField,
-            password: await sha256(createPasswordField),
+            password: createPasswordField,
         };
 
         createUser({
             variables: { newUserData: newUserData },
-        }).then((ex) => {
-            console.log(ex);
-            console.log(data);
         });
     };
 
