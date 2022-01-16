@@ -82,6 +82,12 @@ const GamePlay = ({ boxers, boxer }) => {
         }
     }, [p1Hp, p2Hp]);
 
+    useEffect(() => {
+        if (winner === "Player 1") {
+            console.log("tset");
+        }
+    }, [winner]);
+
     return (
         <Box>
             <Grid container columnSpacing={1}>
