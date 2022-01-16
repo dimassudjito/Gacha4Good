@@ -57,8 +57,8 @@ export class User {
         if (!this.inventory) {
             this.inventory = new Map<Ref<BoxingCard>, number>();
         }
-        const existingCount = this.inventory.get(newCard);
-        if (existingCount) {
+        if (this.inventory.has(newCard)) {
+            const existingCount = this.inventory.get(newCard);
             this.inventory.set(newCard, existingCount + 1);
         } else {
             this.inventory.set(newCard, 1);
