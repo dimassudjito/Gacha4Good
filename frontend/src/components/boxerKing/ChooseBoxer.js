@@ -9,11 +9,27 @@ import BoxerCard from "./BoxerCard";
 const ChooseBoxer = ({ boxers }) => {
     const [index, setIndex] = useState(0);
 
+    const decreaseIndex = () => {
+        if (index > 0) {
+            setIndex(index - 1);
+        } else {
+            setIndex(boxers.length - 1);
+        }
+    };
+
+    const increaseIndex = () => {
+        if (index < boxers.length - 1) {
+            setIndex(index + 1);
+        } else {
+            setIndex(0);
+        }
+    };
+
     return (
         <Box sx={{ mt: 8 }}>
             <Grid container justifyContent="center" alignItems="center">
                 <Grid item>
-                    <IconButton color="secondary" onClick={() => setIndex(index - 1)}>
+                    <IconButton color="secondary" onClick={decreaseIndex}>
                         <ArrowBackIosNewIcon />
                     </IconButton>
                 </Grid>
@@ -21,7 +37,7 @@ const ChooseBoxer = ({ boxers }) => {
                     <BoxerCard key={boxers[index].name} boxer={boxers[index]} />
                 </Grid>
                 <Grid item>
-                    <IconButton color="secondary" onClick={() => setIndex(index - 1)}>
+                    <IconButton color="secondary" onClick={increaseIndex}>
                         <ArrowForwardIosIcon />
                     </IconButton>
                 </Grid>
