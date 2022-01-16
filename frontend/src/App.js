@@ -1,16 +1,16 @@
 import React from 'react'
-import { Link, BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 //import pages
-import Coin from './pages/Coin';
-import Inventory from './pages/Inventory';
-import Marketplace from './pages/Marketplace';
-import BoxerKing from './pages/BoxerKing';
-import Dashboard from './pages/Dashboard';
+import Coin from './pages/Coin'
+import Inventory from './pages/Inventory'
+import Marketplace from './pages/Marketplace'
+import BoxerKing from './pages/BoxerKing'
+import Dashboard from './pages/Dashboard'
 
-// MUI theme configuration
 import CssBaseline from '@mui/material/CssBaseline'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 
+// MUI theme configuration
 const theme = createTheme({
   palette: {
     primary: {
@@ -35,7 +35,7 @@ function App() {
           <Route path="/coin" element={<Coin />} />
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/marketplace" element={<Marketplace />} />
-          <Route path="/BoxerKing" element={<BoxerKing />} />
+          <Route path="/boxer-king" element={<BoxerKing />} />
         </Routes>
       </Router>
     </ThemeProvider>
