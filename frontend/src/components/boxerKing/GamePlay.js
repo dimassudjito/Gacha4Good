@@ -19,20 +19,62 @@ const GamePlay = ({ boxers }) => {
     // update p1Move
     setP1Move(move)
     // make move for bot
-    setP2Move('paper')
+    let move2 = createBoxMove()
+    setP2Move(move2)
     // evaluate game
     let winner = evaluateMove(p1Move, p2Move)
     // adjust health point
     modifyHp(winner)
   }
 
+  const createBoxMove = () => {
+    let choice = ['rock', 'paper', 'scissor']
+    let i = Math.floor(Math.random() * 3)
+    return choice[i]
+  }
+
   const evaluateMove = (move1, move2) => {
-    return 'p1'
+    if (move1 === 'rock') {
+      switch (move2) {
+        case 'rock':
+          return 'draw'
+        case 'paper':
+          return 'p2'
+        case 'scissor':
+          return 'p1'
+        default:
+          return 'draw'
+      }
+    } else if (move1 === 'paper') {
+      switch (move2) {
+        case 'rock':
+          return 'p1'
+        case 'paper':
+          return 'draw'
+        case 'scissor':
+          return 'p2'
+        default:
+          return 'draw'
+      }
+    } else if (move1 === 'scissor') {
+      switch (move2) {
+        case 'rock':
+          return 'p2'
+        case 'paper':
+          return 'p1'
+        case 'scissor':
+          return 'draw'
+        default:
+          return 'draw'
+      }
+    }
   }
 
   const modifyHp = (winner) => {
     if (winner === 'p1') {
       setP2Hp(p2Hp - p1.power)
+    } else if (winner === 'p2') {
+      setP1Hp(p1Hp - p2.power)
     }
   }
 
@@ -72,10 +114,22 @@ const GamePlay = ({ boxers }) => {
           >
             Rock
           </Button>
-          <Button color="secondary" variant="outlined">
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={() => {
+              makeMove('paper')
+            }}
+          >
             Paper
           </Button>
-          <Button color="secondary" variant="outlined">
+          <Button
+            color="secondary"
+            variant="outlined"
+            onClick={() => {
+              makeMove('scissor')
+            }}
+          >
             Scissor
           </Button>
         </Grid>
