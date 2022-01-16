@@ -7,6 +7,8 @@ import Marketplace from "./pages/Marketplace";
 import BoxerKing from "./pages/BoxerKing";
 import Dashboard from "./pages/Dashboard";
 import Header from "./components/boxerKing/Header";
+import Login from "./pages/Login";
+
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
@@ -36,6 +38,7 @@ function App() {
           <Route path="/inventory" element={<Inventory />} />
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/boxer-king" element={<BoxerKing />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </Router>
     </ThemeProvider>
