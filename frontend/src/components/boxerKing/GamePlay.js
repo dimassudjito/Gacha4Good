@@ -8,7 +8,7 @@ import BoxerHead from "./BoxerHead";
 const GamePlay = ({ boxers, boxer }) => {
     // general card data
     const [p1] = useState(boxer);
-    const [p2] = useState(boxers[1]);
+    const [p2] = useState(boxers[Math.floor(Math.random() * boxers.length)]);
     // gameplay data
     const [p1Move, setP1Move] = useState(null);
     const [p2Move, setP2Move] = useState(null);
