@@ -20,7 +20,7 @@ const MenuGrid = () => {
                     </Card>
                 </Grid>
                 {[1, 2, 3, 4, 5, 6, 7].map((item) => (
-                    <Grid item xs={4}>
+                    <Grid key={item} item xs={4}>
                         <Card sx={{ width: "3em", height: "3em" }}></Card>
                     </Grid>
                 ))}
