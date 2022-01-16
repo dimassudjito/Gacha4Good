@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
 import Login from "./pages/Login";
 import Marketplace from "./pages/Marketplace";
+import Payment from "./pages/Payment";
 
 // MUI theme configuration
 const theme = createTheme({
@@ -41,6 +42,7 @@ function App() {
                         <Route path="/boxer-king" element={<BoxerKing />} />
                         <Route path="/create-card" element={<CreateBoxer />} />
                         <Route path="/login" element={<Login />} />
+                        <Route path="/payment" element={<Payment />} />
                     </Routes>
                 </Router>
             </Container>
