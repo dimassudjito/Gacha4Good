@@ -10,11 +10,14 @@ const gameSchema = new mongoose.Schema(
 
 export const Game = mongoose.model("Game", gameSchema);
 
-const gameRoomSchema = new mongoose.Schema({
-    startTime: Date,
-    endTime: Date,
-    players: [{ type: Schema.Types.ObjectId, ref: "User" }],
-});
+const gameRoomSchema = new mongoose.Schema(
+    {
+        startTime: Date,
+        endTime: Date,
+        players: [{ type: Schema.Types.ObjectId, ref: "User" }],
+    },
+    { discriminatorKey: "gameId" }
+);
 
 // class GameRoomClass {
 //     get liveGames() {}

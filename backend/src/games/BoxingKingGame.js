@@ -5,6 +5,7 @@ const GAME_ID = 1;
 
 const boxingKingGameAction = new mongoose.Schema({
     timestamp: Date,
+    player: { type: Schema.Types.ObjectId, ref: "User" },
     action: {
         type: String,
         enum: ["ROCK", "PAPER", "SCISSORS"],
@@ -33,6 +34,32 @@ const boxingKingSchema = new mongoose.Schema({
 const boxingKingGameRoomSchema = new mongoose.Schema({
     actions: [boxingKingGameAction],
 });
+
+class BoxingKingGameRoomClass {
+    static async NewRoom(creatorPlayer) {
+        const newRoom = this.createOne({
+            players: [creatorPlayer],
+            actions: [],
+        });
+
+        return newRoom;
+    }
+
+    AddPlayer(joinerPlayer) {
+        this.players.push(joinerPlayer);
+        this.save();
+    }
+
+    AddAction(player, action) {
+        this.actions.push({
+            player: player,
+            action: action,
+        });
+        this.save();
+    }
+}
+
+boxingKingGameRoomSchema.loadClass(BoxingKingGameRoomClass);
 
 export const BoxingKingGame = Game.discriminator("BoxingKing", boxingKingSchema);
 export const BoxingKingGameRoom = GameRoom.discriminator(GAME_ID, boxingKingGameRoomSchema);

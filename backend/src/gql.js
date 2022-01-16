@@ -61,8 +61,7 @@ export const resolvers = {
         // UserBuyItem,
         // UserDeleteItem,
         createGameRoom: async (_, { gameId }) => {},
-        joinGameRoom: async (_, { gameId }) => {},
-        deleteGameRoom: async (_, { gameId }) => {},
+        joinGameRoom: async (_, { gameRoomId }) => {},
         boxingKingSendMove: async (_, { gameRoomId }) => {},
     },
 };
