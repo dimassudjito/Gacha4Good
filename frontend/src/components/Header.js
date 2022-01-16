@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
-import Coin from "../../pages/Coin";
 import { Link } from "react-router-dom";
 
 const Header = () => {

@@ -1,15 +1,22 @@
 import React from "react";
-import SvgIcon from '@mui/material/SvgIcon';
+import SvgIcon from "@mui/material/SvgIcon";
 import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import Header from "../components/boxerKing/Header";
+import Header from "../components/Header";
 import { AppBar } from "@mui/material";
 
 const Coin = () => {
     return (
         <Box>
             <Header />
-            <Grid justify="space-between" spacing={3} sx={{ mt: 50 }} container justifyContent="center" alignItems="center">
+            <Grid
+                justify="space-between"
+                spacing={3}
+                sx={{ mt: 50 }}
+                container
+                justifyContent="center"
+                alignItems="center"
+            >
                 <Grid item>
                     <Box
                         display="flex"
@@ -48,7 +55,7 @@ const Coin = () => {
                 </Grid>
             </Grid>
         </Box>
-    )
+    );
 };
 
 export default Coin;

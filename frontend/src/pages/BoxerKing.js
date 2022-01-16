@@ -4,7 +4,7 @@ import { Container, Box } from "@mui/material";
 
 import ChooseBoxer from "../components/boxerKing/ChooseBoxer";
 import GamePlay from "../components/boxerKing/GamePlay";
-import Header from "../components/boxerKing/Header";
+import Header from "../components/Header";
 
 const dummyBoxerData = [
     {

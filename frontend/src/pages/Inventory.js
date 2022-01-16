@@ -4,7 +4,7 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import React from "react";
 import BoxerCard from "../components/boxerKing/BoxerCard";
-import Header from "../components/boxerKing/Header";
+import Header from "../components/Header";
 
 const Inventory = () => {
     const dummyBoxerData = [

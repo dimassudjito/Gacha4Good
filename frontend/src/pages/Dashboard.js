@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { Box, Grid, Typography, Button, Container } from "@mui/material";
+import { Box, Grid, Button, Container } from "@mui/material";
 
 import MenuGrid from "../components/MenuGrid";
-import Header from "../components/boxerKing/Header";
+import Header from "../components/Header";
 
 const Dashboard = () => {
     return (

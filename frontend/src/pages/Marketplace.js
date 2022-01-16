@@ -11,7 +11,7 @@ import Box from "@mui/material/Box";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Header from "../components/boxerKing/Header";
+import Header from "../components/Header";
 import BoxerCard from "../components/boxerKing/BoxerCard";
 
 const GET_PACKS = gql`
