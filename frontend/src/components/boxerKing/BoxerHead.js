@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import React from "react";
 
-const BoxerHead = ({ boxer: { name, head_img } }) => {
+const BoxerHead = ({ boxer: { name, headPicture } }) => {
     return (
         <Box sx={{ display: "flex", justifyContent: "center" }}>
             <Box>
@@ -12,7 +12,7 @@ const BoxerHead = ({ boxer: { name, head_img } }) => {
                         width: "15em",
                         height: "15em",
                     }}
-                    src={head_img}
+                    src={headPicture}
                     alt={name}
                 />
             </Box>

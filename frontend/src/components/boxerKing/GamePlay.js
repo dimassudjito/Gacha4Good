@@ -10,8 +10,8 @@ const GamePlay = ({ boxers, boxer }) => {
     // gameplay data
     const [p1Move, setP1Move] = useState(null);
     const [p2Move, setP2Move] = useState(null);
-    const [p1Hp, setP1Hp] = useState(p1.hp);
-    const [p2Hp, setP2Hp] = useState(p2.hp);
+    const [p1Hp, setP1Hp] = useState(p1.healthPoints);
+    const [p2Hp, setP2Hp] = useState(p2.healthPoints);
     const [winner, setWinner] = useState(null);
 
     const makeMove = (move1) => {

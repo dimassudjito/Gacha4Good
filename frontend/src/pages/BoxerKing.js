@@ -1,8 +1,24 @@
 import { Box, Container } from "@mui/material";
 import React, { useState } from "react";
+import { gql, useQuery } from "@apollo/client";
 import ChooseBoxer from "../components/boxerKing/ChooseBoxer";
 import GamePlay from "../components/boxerKing/GamePlay";
 import Header from "../components/Header";
+
+const GET_INVENTORY = gql`
+    query Inventory($userId: String!) {
+        user(id: $userId) {
+            inventory {
+                _id
+                name
+                healthPoints
+                attackPower
+                cardPicture
+                headPicture
+            }
+        }
+    }
+`;
 
 const dummyBoxerData = [
     {
@@ -40,6 +56,11 @@ const dummyBoxerData = [
 const BoxerKing = () => {
     const [boxers] = useState(dummyBoxerData);
     const [boxer, setBoxer] = useState(null);
+    const { loading, error, data } = useQuery(GET_INVENTORY, {
+        variables: {
+            userId: "61e45a528161a89ca544a398",
+        },
+    });
 
     const chooseBoxer = (boxer) => {
         setBoxer(boxer);
@@ -50,9 +71,12 @@ const BoxerKing = () => {
             <Header />
             <Container maxWidth="md">
                 {boxer ? (
-                    <GamePlay boxers={boxers} boxer={boxer} />
+                    <GamePlay boxers={data ? data.user.inventory : boxers} boxer={boxer} />
                 ) : (
-                    <ChooseBoxer boxers={boxers} chooseBoxer={chooseBoxer} />
+                    <ChooseBoxer
+                        boxers={data ? data.user.inventory : boxers}
+                        chooseBoxer={chooseBoxer}
+                    />
                 )}
             </Container>
         </Box>
