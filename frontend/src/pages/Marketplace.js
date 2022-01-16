@@ -1,4 +1,4 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql, useMutation, useQuery } from "@apollo/client";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { DialogContent, Typography } from "@mui/material";
@@ -19,24 +19,42 @@ const GET_PACKS = gql`
             _id
             name
             price
-            cards {
-                card
-                rate
-            }
+        }
+    }
+`;
+
+const BUY_PACK = gql`
+    mutation BuyPack($packId: String!, $userId: String!) {
+        buyPack(packId: $packId, userId: $userId) {
+            _id
+            name
+            healthPoints
+            attackPower
+            cardPicture
+            headPicture
         }
     }
 `;
 
 const Marketplace = () => {
+    const [counter, setCounter] = useState(1);
+    const [open, setOpen] = useState(false);
+    const [bought, setBought] = useState(false);
+    const [boughtCard, setBoughtCard] = useState({});
+
     const { loading, error, data } = useQuery(GET_PACKS);
+    const [buyPackMut, { packData, loadingMut, errorMut }] = useMutation(BUY_PACK, {
+        ignoreResults: false,
+        onCompleted: (card) => {
+            setBoughtCard(card.buyPack);
+            setBought(true);
+        },
+    });
 
     const color = ["#CD7F32", "#C0C0C0", "#FFD700"];
-    const color_name = ["bronze", "silver", "gold"]
-    const pack_price = ["1000", "10000", "25000"]
+    const color_name = ["bronze", "silver", "gold"];
+    const pack_price = ["1000", "10000", "25000"];
 
-    const [counter, setCounter] = useState(1);
-    const [buying, setBuying] = useState(false);
-    const [open, setOpen] = React.useState(false);
     // 0= silver, 1 = gold, 2 = bronze
     // console.log(data.packs[0].price)
     // console.log(data.packs[0].cards[0].card)
@@ -52,12 +70,31 @@ const Marketplace = () => {
             setCounter(2);
         }
     }, [counter]);
-    // if (loading) {
-    //     return 'Loading...'
-    // };
-    // if (error) {
-    //     return `Error! ${error.message}`
-    // }
+
+    if (loading || loadingMut) {
+        return "Loading Card.";
+    }
+    if (error || errorMut) {
+        return `Error! ${error.message}`;
+    }
+
+    const buyPack = () => {
+        let packId;
+        if (counter === 0) {
+            packId = "61e469fc6ded4fcc8a23c1ff";
+        } else if (counter === 1) {
+            packId = "61e4695f6ded4fcc8a23c1fe";
+        } else if (counter === 2) {
+            packId = "61e457a72cf9ba8f17324f36";
+        }
+        buyPackMut({
+            variables: {
+                packId: packId,
+                userId: "61e45a528161a89ca544a398",
+            },
+        });
+    };
+
     return (
         <Box>
             <Header />
@@ -69,17 +106,8 @@ const Marketplace = () => {
                 justifyContent="center"
                 alignItems="center"
             >
-                {buying ? (
-                    <BoxerCard
-                        boxer={{
-                            name: "Mike Tyson",
-                            hp: 100,
-                            power: 25,
-                            img: "https://cdn.vox-cdn.com/thumbor/LtQtXYaj-suLI0jKUBLE-Fx2O9s=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22127884/1288364271.jpg",
-                            head_img:
-                                "https://boxrec.com/media/images//thumb/9/94/MikeTysonHeadshot2.jpg/250px-MikeTysonHeadshot2.jpg",
-                        }}
-                    ></BoxerCard>
+                {bought ? (
+                    <BoxerCard boxer={boughtCard} />
                 ) : (
                     <Box>
                         <Dialog open={open}>
@@ -88,7 +116,7 @@ const Marketplace = () => {
                             <Button
                                 onClick={() => {
                                     setOpen(false);
-                                    setBuying(true);
+                                    buyPack();
                                 }}
                                 variant="contained"
                                 style={{ backgroundColor: "#000000" }}
@@ -125,7 +153,10 @@ const Marketplace = () => {
                                 </Grid>
                             </Grid>
                         </Grid>
-                        <Typography align="center" color="secondary"> {color_name[counter]}</Typography>
+                        <Typography align="center" color="secondary">
+                            {" "}
+                            {color_name[counter]}
+                        </Typography>
                     </Box>
                 )}
             </Grid>
