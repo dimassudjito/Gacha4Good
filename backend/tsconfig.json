@@ -1,10 +1,7 @@
 {
     "compilerOptions": {
         "outDir": "./dist",
-        "lib": [
-            "ES2021",
-            "esnext.asynciterable"
-        ],
+        "lib": ["ES2021", "esnext.asynciterable"],
         "module": "commonjs",
         "target": "ES2021",
         "allowJs": true,
@@ -14,10 +11,6 @@
         "esModuleInterop": true,
         "allowSyntheticDefaultImports": true
     },
-    "include": [
-        "./src/**/*"
-    ],
-    "exclude": [
-        "node_modules",
-    ]
+    "include": ["./src/**/*"],
+    "exclude": ["node_modules"]
 }
