@@ -10,6 +10,7 @@ import { CreateBoxer } from "./pages/CreateBoxer";
 import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
 import Marketplace from "./pages/Marketplace";
+import Login from "./pages/Login";
 
 // MUI theme configuration
 const theme = createTheme({
@@ -39,6 +40,7 @@ function App() {
                         <Route path="/marketplace" element={<Marketplace />} />
                         <Route path="/boxer-king" element={<BoxerKing />} />
                         <Route path="/create-card" element={<CreateBoxer />} />
+                        <Route path="/login" element={<Login />} />
                     </Routes>
                 </Router>
             </Container>
