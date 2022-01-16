@@ -1,6 +1,9 @@
+import React, { useEffect, useState } from "react";
+import { gql, useQuery } from "@apollo/client";
+
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { CardActionArea, DialogContent, Typography } from "@mui/material";
+import { DialogContent, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Dialog from "@mui/material/Dialog";
@@ -8,17 +11,28 @@ import Box from "@mui/material/Box";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import React, { useEffect, useState } from "react";
 import Header from "../components/boxerKing/Header";
 import BoxerCard from "../components/boxerKing/BoxerCard";
 
+const GET_PACKS = gql`
+    query Packs {
+        packs {
+            _id
+        }
+    }
+`;
+
 const Marketplace = () => {
+    const { loading, error, data } = useQuery(GET_PACKS);
+
     const pack = ["bronze pack", "silver pack", "gold pack"];
     const price = ["1000", "5000", "20000"];
     const color = ["#CD7F32", "#C0C0C0", "#FFD700"];
 
     const [counter, setCounter] = useState(1);
     const [buying, setBuying] = useState(false);
+    const [open, setOpen] = React.useState(false);
+
     const addCounter = (counter) => {
         setCounter(counter + 1);
     };
@@ -31,10 +45,11 @@ const Marketplace = () => {
             setCounter(2);
         }
     }, [counter]);
-    const [open, setOpen] = React.useState(false);
+
     return (
         <Box>
             <Header />
+            <Typography color="secondary">test data: {data}</Typography>
             <Grid
                 justify="space-between"
                 spacing={3}
