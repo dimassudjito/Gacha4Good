@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Box, IconButton, Grid } from "@mui/material";
+import { Box, IconButton, Grid, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
@@ -28,6 +28,11 @@ const ChooseBoxer = ({ boxers, chooseBoxer }) => {
     return (
         <Box sx={{ mt: 8 }}>
             <Grid container justifyContent="center" alignItems="center">
+                <Typography variant="h4" color="secondary">
+                    Choose your fighter!
+                </Typography>
+            </Grid>
+            <Grid container justifyContent="center" alignItems="center" sx={{ mt: 8 }}>
                 <Grid item>
                     <IconButton color="secondary" onClick={decreaseIndex}>
                         <ArrowBackIosNewIcon />
