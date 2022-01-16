@@ -62,8 +62,6 @@ const Inventory = () => {
         return `Error! ${error.message}`;
     }
 
-    console.log(data);
-
     return (
         <Box>
             <Header />

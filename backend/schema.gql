@@ -10,23 +10,18 @@ type AuthorizedUser {
 
 type BoxingCard {
   _id: ID!
-  attackPower: Float!
+  attackPower: Int!
   cardPicture: String!
   headPicture: String!
-  healthPoints: Float!
+  healthPoints: Int!
   name: String!
 }
 
 type BoxingCardPack {
   _id: ID!
-  cards: [BoxingCardRates!]!
+  cards: [BoxingCard!]!
   name: String!
-  price: Float!
-}
-
-type BoxingCardRates {
-  card: ID!
-  rate: Float!
+  price: Int!
 }
 
 type Mutation {
@@ -34,15 +29,14 @@ type Mutation {
   buyPack(packId: String!, userId: String!): BoxingCard!
   createBoxer(boxerData: NewBoxingCard!): BoxingCard!
   login(password: String!, username: String!): AuthorizedUser!
-  logout: Boolean!
   newUser(newUserData: NewUserInput!): AuthorizedUser!
 }
 
 input NewBoxingCard {
-  attackPower: Float!
+  attackPower: Int!
   cardPicture: String!
   headPicture: String!
-  healthPoints: Float!
+  healthPoints: Int!
   name: String!
 }
 
@@ -58,7 +52,7 @@ type Query {
 
 type User {
   _id: ID!
-  balance: Float!
+  balance: Int!
   inventory: [BoxingCard!]!
   username: String!
 }
