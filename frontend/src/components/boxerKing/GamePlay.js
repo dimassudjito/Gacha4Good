@@ -68,9 +68,9 @@ const GamePlay = ({ boxers, boxer }) => {
 
     const modifyHp = (winner) => {
         if (winner === "p1") {
-            setP2Hp(p2Hp - p1.power);
+            setP2Hp(p2Hp - p1.attackPower);
         } else if (winner === "p2") {
-            setP1Hp(p1Hp - p2.power);
+            setP1Hp(p1Hp - p2.attackPower);
         }
     };
 
