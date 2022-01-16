@@ -48,7 +48,7 @@ const Marketplace = () => {
     return (
         <Box>
             <Header />
-            <Typography color="secondary">test data: {data.length}</Typography>
+            <Typography color="secondary">test data:</Typography>
             <Grid
                 justify="space-between"
                 spacing={3}
