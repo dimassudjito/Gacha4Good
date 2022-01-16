@@ -4,33 +4,26 @@
         {
             "type": "npm",
             "script": "start",
-            "isBackground": true,
-            "problemMatcher": [
-                {
-                    "owner": "cra",
-                    "fileLocation": ["relative", "${workspaceFolder}"],
-                    "source": "create-react-app",
-                    "applyTo": "allDocuments",
-                    "pattern": [
-                        {
-                            "regexp": "^([^\\s].*?)$",
-                            "file": 1
-                        },
-                        {
-                            "regexp": "^  Line\\s+(\\d+):\\s+(.*)\\s\\s+(.*)$",
-                            "line": 1,
-                            "message": 2,
-                            "code": 3,
-                            "loop": true
-                        }
-                    ],
-                    "background": {
-                        "activeOnStart": false,
-                        "beginsPattern": "^(?:Compiled with warnings\\.|Compiled successfully!)$",
-                        "endsPattern": "^(?:Search for the keywords to learn more about each warning\\.|Note that the development build is not optimized\\.)$"
-                    }
+            "problemMatcher": {
+                "owner": "custom",
+                "pattern": {
+                    "regexp": "^([^\\s].*)\\((\\d+|\\d+,\\d+|\\d+,\\d+,\\d+,\\d+)\\):\\s+(error|warning|info)\\s+(TS\\d+)\\s*:\\s*(.*)$",
+                    "file": 1,
+                    "location": 2,
+                    "severity": 3,
+                    "code": 4,
+                    "message": 5
+                },
+                "fileLocation": "relative",
+                "background": {
+                    "activeOnStart": true,
+                    "beginsPattern": "^\\.*",
+                    "endsPattern": "^\\.*To create a production build, use npm run build\\."
                 }
-            ]
+            },
+            "label": "npm: start",
+            "detail": "react-scripts start",
+            "isBackground": true
         }
     ]
 }
