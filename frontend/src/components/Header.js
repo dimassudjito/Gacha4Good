@@ -1,3 +1,4 @@
+import { gql, useQuery } from "@apollo/client";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import AppBar from "@mui/material/AppBar";
@@ -8,9 +9,21 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import { Link } from "react-router-dom";
 
+const GET_USER = gql`
+    query user($userId: String!) {
+        user(id: $userId) {
+            username
+            balance
+        }
+    }
+`;
+
 const Header = () => {
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const { loading, error, data } = useQuery(GET_USER, {
+        variables: { userId: "61e45a528161a89ca544a398" },
+    });
 
     const handleChange = (event) => {
         setAuth(event.target.checked);
@@ -39,7 +52,7 @@ const Header = () => {
                         alt="coin."
                         src="/coin.png"
                     />
-                    <Typography> 1400 </Typography>
+                    <Typography> {data ? data.user.balance : null} </Typography>
                     <Link to="/Coin">
                         <IconButton
                             size="large"
@@ -73,7 +86,7 @@ const Header = () => {
                                 onClick={handleMenu}
                                 color="inherit"
                             >
-                                <h4> atlas </h4>
+                                <h4> {data ? data.user.username : null} </h4>
                                 <AccountCircle />
                             </IconButton>
                         </div>
