@@ -1,7 +1,5 @@
-import React, { useState, useEffect } from "react";
-
-import { Box, Typography, Card, Button, Grid, ButtonGroup } from "@mui/material";
-
+import { Box, Button, ButtonGroup, Card, Grid, Typography } from "@mui/material";
+import React, { useEffect, useState } from "react";
 import BoxerCard from "./BoxerCard";
 import BoxerHead from "./BoxerHead";
 

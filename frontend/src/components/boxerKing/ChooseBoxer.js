@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-
-import { Box, IconButton, Grid, Typography } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-
+import { Box, Grid, IconButton, Typography } from "@mui/material";
+import React, { useState } from "react";
 import BoxerCard from "./BoxerCard";
 
 const ChooseBoxer = ({ boxers, chooseBoxer }) => {

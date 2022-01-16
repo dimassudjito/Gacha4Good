@@ -1,6 +1,5 @@
+import { Box } from "@mui/material";
 import React from "react";
-
-import { Box, Button, Typography } from "@mui/material";
 
 const BoxerHead = ({ boxer: { name, head_img } }) => {
     return (

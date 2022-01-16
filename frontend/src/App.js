@@ -9,8 +9,8 @@ import Coin from "./pages/Coin";
 import { CreateBoxer } from "./pages/CreateBoxer";
 import Dashboard from "./pages/Dashboard";
 import Inventory from "./pages/Inventory";
-import Marketplace from "./pages/Marketplace";
 import Login from "./pages/Login";
+import Marketplace from "./pages/Marketplace";
 
 // MUI theme configuration
 const theme = createTheme({

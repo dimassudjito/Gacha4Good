@@ -8,10 +8,7 @@
             "problemMatcher": [
                 {
                     "owner": "cra",
-                    "fileLocation": [
-                        "relative",
-                        "${workspaceFolder}"
-                    ],
+                    "fileLocation": ["relative", "${workspaceFolder}"],
                     "source": "create-react-app",
                     "applyTo": "allDocuments",
                     "pattern": [

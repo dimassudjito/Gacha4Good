@@ -10,9 +10,7 @@
             "request": "launch",
             "url": "http://localhost:3000",
             "webRoot": "${workspaceRoot}/src",
-            "skipFiles": [
-                "<node_internals>/**"
-            ],
+            "skipFiles": ["<node_internals>/**"],
             "preLaunchTask": "npm: start"
         }
     ]

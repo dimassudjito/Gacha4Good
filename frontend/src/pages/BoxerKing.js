@@ -1,7 +1,5 @@
+import { Box, Container } from "@mui/material";
 import React, { useState } from "react";
-
-import { Container, Box } from "@mui/material";
-
 import ChooseBoxer from "../components/boxerKing/ChooseBoxer";
 import GamePlay from "../components/boxerKing/GamePlay";
 import Header from "../components/Header";

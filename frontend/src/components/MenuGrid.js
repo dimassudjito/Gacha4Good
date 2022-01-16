@@ -1,7 +1,6 @@
+import { Box, Card, CardMedia, Grid } from "@mui/material";
 import React from "react";
 import { Link } from "react-router-dom";
-
-import { Box, Grid, Typography, Card, CardMedia } from "@mui/material";
 
 const MenuGrid = () => {
     return (

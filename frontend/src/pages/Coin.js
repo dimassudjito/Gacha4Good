@@ -1,9 +1,7 @@
-import React from "react";
-import SvgIcon from "@mui/material/SvgIcon";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import React from "react";
 import Header from "../components/Header";
-import { AppBar } from "@mui/material";
 
 const Coin = () => {
     return (

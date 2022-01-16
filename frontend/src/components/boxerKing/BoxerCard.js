@@ -1,6 +1,5 @@
+import { Card, CardContent, CardMedia, Typography } from "@mui/material";
 import React from "react";
-
-import { Card, CardMedia, CardContent, Typography } from "@mui/material";
 
 const BoxerCard = ({ boxer: { name, hp, power, img } }) => {
     return (

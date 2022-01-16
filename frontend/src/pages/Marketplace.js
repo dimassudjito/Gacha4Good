@@ -1,18 +1,17 @@
-import React, { useEffect, useState } from "react";
 import { gql, useQuery } from "@apollo/client";
-
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { DialogContent, Typography } from "@mui/material";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import Dialog from "@mui/material/Dialog";
-import Box from "@mui/material/Box";
 import DialogTitle from "@mui/material/DialogTitle";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
-import Header from "../components/Header";
+import React, { useEffect, useState } from "react";
 import BoxerCard from "../components/boxerKing/BoxerCard";
+import Header from "../components/Header";
 
 const GET_PACKS = gql`
     query Packs {

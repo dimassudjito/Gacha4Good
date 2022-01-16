@@ -1,6 +1,5 @@
+import { Box, Button, Card, Grid, TextField, Typography } from "@mui/material";
 import React from "react";
-
-import { TextField, Grid, Card, Typography, Box, Button } from "@mui/material";
 
 const Login = () => {
     return (
