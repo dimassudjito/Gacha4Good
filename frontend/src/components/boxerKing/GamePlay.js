@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import { Box, Typography, Card, Button, Grid, CardContent } from '@mui/material'
 
 import BoxerCard from './BoxerCard'
+import BoxerHead from './BoxerHead'
 
 const GamePlay = ({ boxers }) => {
   const [p1, setP1] = useState(boxers[0])
@@ -16,6 +17,7 @@ const GamePlay = ({ boxers }) => {
             <Typography>userId1</Typography>
             <Typography>HP: {p1.hp}</Typography>
             <hr />
+            <BoxerHead boxer={p1} />
           </Card>
         </Grid>
         <Grid item xs={6}>
@@ -23,6 +25,7 @@ const GamePlay = ({ boxers }) => {
             <Typography>userId2</Typography>
             <Typography>HP: {p2.hp}</Typography>
             <hr />
+            <BoxerHead boxer={p2} />
           </Card>
         </Grid>
       </Grid>
