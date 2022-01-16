@@ -35,7 +35,7 @@ export const CreateBoxer = () => {
             variables: {
                 boxerData: boxerData,
             },
-        }).then(() => console.log(error));
+        });
     };
 
     return (
