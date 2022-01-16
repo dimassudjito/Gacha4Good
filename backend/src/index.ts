@@ -1,6 +1,6 @@
 import { mongoose } from "@typegoose/typegoose";
 import { ApolloServer } from "apollo-server";
-import * as dotenv from "dotenv";
+import dotenv from "dotenv";
 import "reflect-metadata";
 import { buildSchema } from "type-graphql";
 import { parseRequest, tokenCheck } from "./service/auth";
@@ -30,7 +30,9 @@ mongoose
     .connect(
         "mongodb+srv://gacha4good:verygood@cluster0.bpxxb.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
     )
-    .then(startServer)
+    .then(async () => {
+        await startServer();
+    })
     .catch((err) => {
         console.error(err);
     });

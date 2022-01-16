@@ -11,6 +11,7 @@ export class User {
     public _id!: mongoose.Types.ObjectId;
 
     @Authorized()
+    @Field()
     @prop({ required: true })
     public username!: string;
 

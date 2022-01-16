@@ -28,6 +28,14 @@ export class BoxingCard {
     public headPicture!: string;
 }
 
+@ObjectType()
+export class BoxingCardRates {
+    @Field()
+    public card: BoxingCard;
+    @Field()
+    public rate: number;
+}
+
 export const BoxingCardModel = getModelForClass(BoxingCard);
 
 @ObjectType()
@@ -44,7 +52,7 @@ export class BoxingCardPack {
     @prop({ required: true })
     public price!: number;
 
-    @Field()
+    @Field(() => BoxingCardRates)
     @prop({ required: true, ref: () => BoxingCard })
     public cards!: Map<Ref<BoxingCard>, number>;
 }

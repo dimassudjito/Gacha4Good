@@ -1,22 +1,42 @@
 import { DocumentType, Ref } from "@typegoose/typegoose";
 import { ApolloError, UserInputError } from "apollo-server";
-import { Arg, Authorized, Ctx, Mutation, Query, Resolver } from "type-graphql";
-import { BoxingCard, BoxingCardModel, BoxingCardPack, BoxingCardPackModel } from "../model/game";
+import { Arg, Authorized, Ctx, FieldResolver, Mutation, Resolver, Root } from "type-graphql";
+import {
+    BoxingCard,
+    BoxingCardModel,
+    BoxingCardPack,
+    BoxingCardPackModel,
+    BoxingCardRates,
+} from "../model/game";
 import { AuthorizedContext } from "./auth";
 
 const randBetween = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
 };
 
-@Resolver()
+@Resolver(BoxingCardPack)
 export class BoxingGameResolver {
-    @Query()
-    async packs(): Promise<Array<DocumentType<BoxingCardPack>>> {
-        return await BoxingCardPackModel.find();
+    @FieldResolver()
+    async cards(@Root() pack: DocumentType<BoxingCardPack>): Promise<Array<BoxingCardRates>> {
+        const cardRefs = Array.from(pack.cards.keys());
+        const cardRates = Array.from(pack.cards.values());
+        const cardPromises = cardRefs.map((cardRef) => {
+            return BoxingCardModel.findById(cardRef);
+        });
+
+        const resolvedCards = await Promise.all(cardPromises);
+
+        let outputArray = [];
+
+        for (let i = 0; i < resolvedCards.length; i++) {
+            outputArray.push({ card: resolvedCards[i], rate: cardRates[i] });
+        }
+
+        return outputArray;
     }
 
     @Authorized()
-    @Mutation()
+    @Mutation(() => BoxingCard)
     async buyPack(
         @Ctx() ctx: AuthorizedContext,
         @Arg("packId") packId: string
