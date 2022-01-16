@@ -4,7 +4,6 @@ import { Field, ID, ObjectType } from "type-graphql";
 @ObjectType()
 export class BoxingCard {
     @Field(() => ID)
-    @prop({ required: true })
     public _id!: mongoose.Types.ObjectId;
 
     @Field()

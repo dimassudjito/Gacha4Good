@@ -4,7 +4,9 @@ import {
     Arg,
     Authorized,
     Ctx,
+    Field,
     FieldResolver,
+    InputType,
     Maybe,
     Mutation,
     Query,
@@ -23,6 +25,24 @@ import { AuthorizedContext } from "./auth";
 const randBetween = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
 };
+
+@InputType()
+export class NewBoxingCard {
+    @Field()
+    public name!: string;
+
+    @Field()
+    public healthPoints!: number;
+
+    @Field()
+    public attackPower!: number;
+
+    @Field()
+    public cardPicture!: string;
+
+    @Field()
+    public headPicture!: string;
+}
 
 @Resolver(BoxingCardPack)
 export class BoxingGameResolver {
@@ -96,5 +116,13 @@ export class BoxingGameResolver {
         }
 
         return card;
+    }
+
+    @Mutation(() => BoxingCard)
+    async createBoxer(@Arg("boxerData") data: NewBoxingCard): Promise<DocumentType<BoxingCard>> {
+        const newCard = new BoxingCardModel(data);
+        await newCard.save();
+
+        return newCard;
     }
 }

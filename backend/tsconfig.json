@@ -1,7 +1,10 @@
 {
     "compilerOptions": {
         "outDir": "./dist",
-        "lib": ["ES2021", "esnext.asynciterable"],
+        "lib": [
+            "ES2021",
+            "esnext.asynciterable"
+        ],
         "module": "commonjs",
         "target": "ES2021",
         "allowJs": true,
@@ -9,8 +12,13 @@
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "esModuleInterop": true,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "sourceMap": true
     },
-    "include": ["./src/**/*"],
-    "exclude": ["node_modules"]
+    "include": [
+        "./src/**/*"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
 }

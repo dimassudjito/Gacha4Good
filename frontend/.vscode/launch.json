@@ -5,20 +5,15 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "type": "node",
-            "runtimeArgs": [
-                "--experimental-specifier-resolution=node"
-            ],
-            "request": "launch",
             "name": "Launch Program",
+            "type": "firefox",
+            "request": "launch",
+            "url": "http://localhost:3000",
+            "webRoot": "${workspaceRoot}/src",
             "skipFiles": [
                 "<node_internals>/**"
             ],
-            "program": "${workspaceFolder}/src/index.ts",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": [
-                "${workspaceFolder}/dist/**/*.js"
-            ]
+            "preLaunchTask": "npm: start"
         }
     ]
 }

@@ -26,7 +26,7 @@ class NewUserInput {
     @Field()
     password!: string;
 
-    balance: number = 0;
+    balance: number = 10000;
 }
 
 @ObjectType()

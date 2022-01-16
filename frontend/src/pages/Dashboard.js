@@ -8,6 +8,7 @@ const Dashboard = () => {
             <Link to="/marketplace"> Marketplace</Link>
             <Link to="/inventory"> Inventory</Link>
             <Link to="/boxer-king"> BoxerKing</Link>
+            <Link to="/create-card"> Create Boxer</Link>
         </div>
     );
 };
