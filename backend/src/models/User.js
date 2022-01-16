@@ -1,3 +1,4 @@
+import { hashSync } from "bcrypt";
 import mongoose from "mongoose";
 
 const schema = new mongoose.Schema({
@@ -8,7 +9,8 @@ const schema = new mongoose.Schema({
 
 class UserClass {
     static CreateUser(username, password) {
-        const newUser = new User({ username: username, password: password, balance: 100 });
+        const hashedPassword = hashSync(password, 12);
+        const newUser = new User({ username: username, password: hashedPassword, balance: 100 });
 
         newUser.save();
     }

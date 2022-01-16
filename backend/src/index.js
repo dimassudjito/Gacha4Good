@@ -1,8 +1,11 @@
 import { ApolloServerPluginDrainHttpServer } from "apollo-server-core";
 import { ApolloServer } from "apollo-server-fastify";
+import dotenv from "dotenv";
 import fastify from "fastify";
 import mongoose from "mongoose";
 import { resolvers, types } from "./gql.js";
+
+dotenv.config();
 
 const PORT = process.env.PORT || 5555;
 
