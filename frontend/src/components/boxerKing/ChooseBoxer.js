@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import BoxerCard from "./BoxerCard";
 
-const ChooseBoxer = ({ boxers }) => {
+const ChooseBoxer = ({ boxers, chooseBoxer }) => {
     const [index, setIndex] = useState(0);
 
     const decreaseIndex = () => {
@@ -34,7 +34,9 @@ const ChooseBoxer = ({ boxers }) => {
                     </IconButton>
                 </Grid>
                 <Grid item>
-                    <BoxerCard key={boxers[index].name} boxer={boxers[index]} />
+                    <div onClick={() => chooseBoxer(boxers[index])}>
+                        <BoxerCard key={boxers[index].name} boxer={boxers[index]} />
+                    </div>
                 </Grid>
                 <Grid item>
                     <IconButton color="secondary" onClick={increaseIndex}>

@@ -5,9 +5,9 @@ import { Box, Typography, Card, Button, Grid, ButtonGroup } from "@mui/material"
 import BoxerCard from "./BoxerCard";
 import BoxerHead from "./BoxerHead";
 
-const GamePlay = ({ boxers }) => {
+const GamePlay = ({ boxers, boxer }) => {
     // general card data
-    const [p1] = useState(boxers[0]);
+    const [p1] = useState(boxer);
     const [p2] = useState(boxers[1]);
     // gameplay data
     const [p1Move, setP1Move] = useState(null);

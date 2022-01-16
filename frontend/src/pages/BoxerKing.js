@@ -39,12 +39,21 @@ const dummyBoxerData = [
 ];
 
 const BoxerKing = () => {
-    const [boxers, setBoxers] = useState(dummyBoxerData);
+    const [boxers] = useState(dummyBoxerData);
+    const [boxer, setBoxer] = useState(null);
+
+    const chooseBoxer = (boxer) => {
+        setBoxer(boxer);
+    };
 
     return (
         <Box>
             <Container maxWidth="md">
-                {false ? <GamePlay boxers={boxers} /> : <ChooseBoxer boxers={boxers} />}
+                {boxer ? (
+                    <GamePlay boxers={boxers} boxer={boxer} />
+                ) : (
+                    <ChooseBoxer boxers={boxers} chooseBoxer={chooseBoxer} />
+                )}
             </Container>
         </Box>
     );
