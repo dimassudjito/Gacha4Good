@@ -1,14 +1,22 @@
 import React from 'react'
 
-import { Box, Typography, Avatar } from '@mui/material'
+import { Box, Button, Typography } from '@mui/material'
 
-const BoxerHead = ({ boxer: { name, hp, power, img, head_img } }) => {
+const BoxerHead = ({ boxer: { name, head_img } }) => {
   return (
-    <Box>
-      <img
-        style={{ borderRadius: '100%', border: '5px solid red', width: '15em' }}
-        src={head_img}
-      />
+    <Box sx={{ display: 'flex', justifyContent: 'center' }}>
+      <Box>
+        <img
+          style={{
+            borderRadius: '100%',
+            border: '5px solid red',
+            width: '15em',
+            height: '15em'
+          }}
+          src={head_img}
+          alt={name}
+        />
+      </Box>
     </Box>
   )
 }
