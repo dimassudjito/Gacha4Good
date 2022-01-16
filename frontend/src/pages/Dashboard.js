@@ -1,14 +1,42 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+import { Box, Grid, Typography, Button, Container } from "@mui/material";
+
+import MenuGrid from "../components/MenuGrid";
+
 const Dashboard = () => {
     return (
-        <div>
-            <h1> this is dashbaord</h1>
-            <Link to="/Coin"> Coin </Link>
-            <Link to="/marketplace"> Marketplace</Link>
-            <Link to="/inventory"> Inventory</Link>
-            <Link to="/boxer-king"> BoxerKing</Link>
-        </div>
+        <Container maxWidth="md" sx={{ mt: 4 }}>
+            <Grid container justifyContent="center" columnSpacing={4}>
+                <Grid item>
+                    <MenuGrid />
+                </Grid>
+                <Grid item>
+                    <Box sx={{ mb: 2 }}>
+                        <Link to="/marketplace">
+                            <Button color="secondary" variant="outlined">
+                                Marketplace
+                            </Button>
+                        </Link>
+                    </Box>
+                    <Box sx={{ mb: 2 }}>
+                        <Link to="/inventory">
+                            <Button color="secondary" variant="outlined">
+                                Inventory
+                            </Button>
+                        </Link>
+                    </Box>
+                    <Box>
+                        <Link to="/coin">
+                            <Button color="secondary" variant="outlined">
+                                Buy Coin
+                            </Button>
+                        </Link>
+                    </Box>
+                </Grid>
+            </Grid>
+        </Container>
     );
 };
 
