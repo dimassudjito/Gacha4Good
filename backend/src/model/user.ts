@@ -1,8 +1,18 @@
-import { DocumentType, getModelForClass, mongoose, prop } from "@typegoose/typegoose";
+import { DocumentType, getModelForClass, mongoose, prop, Ref } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server";
 import { compare } from "bcrypt";
 import { sign } from "jsonwebtoken";
 import { Authorized, Field, ID, ObjectType } from "type-graphql";
+import { BoxingCard } from "./game";
+
+@ObjectType()
+export class CardInventory {
+    @Field()
+    public card: BoxingCard;
+
+    @Field()
+    public count: number;
+}
 
 @ObjectType()
 export class User {
@@ -23,6 +33,11 @@ export class User {
     @prop({ required: true })
     public balance: number = 0;
 
+    @Authorized()
+    @Field(() => [CardInventory])
+    @prop({ ref: () => BoxingCard })
+    public inventory?: Map<Ref<BoxingCard>, number>;
+
     public static async findByPassword(
         username: string,
         password: string
@@ -36,6 +51,18 @@ export class User {
 
     public static async generateToken(user: DocumentType<User>): Promise<string> {
         return sign(user._id, process.env.SECRET_KEY);
+    }
+
+    public addCard(newCard: Ref<BoxingCard>) {
+        if (!this.inventory) {
+            this.inventory = new Map<Ref<BoxingCard>, number>();
+        }
+        const existingCount = this.inventory.get(newCard);
+        if (existingCount) {
+            this.inventory.set(newCard, existingCount + 1);
+        } else {
+            this.inventory.set(newCard, 1);
+        }
     }
 }
 

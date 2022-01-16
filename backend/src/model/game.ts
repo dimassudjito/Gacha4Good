@@ -52,7 +52,7 @@ export class BoxingCardPack {
     @prop({ required: true })
     public price!: number;
 
-    @Field(() => BoxingCardRates)
+    @Field(() => [BoxingCardRates])
     @prop({ required: true, ref: () => BoxingCard })
     public cards!: Map<Ref<BoxingCard>, number>;
 }

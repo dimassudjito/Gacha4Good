@@ -1,6 +1,16 @@
 import { DocumentType, Ref } from "@typegoose/typegoose";
 import { ApolloError, UserInputError } from "apollo-server";
-import { Arg, Authorized, Ctx, FieldResolver, Mutation, Resolver, Root } from "type-graphql";
+import {
+    Arg,
+    Authorized,
+    Ctx,
+    FieldResolver,
+    Maybe,
+    Mutation,
+    Query,
+    Resolver,
+    Root,
+} from "type-graphql";
 import {
     BoxingCard,
     BoxingCardModel,
@@ -16,6 +26,11 @@ const randBetween = (min: number, max: number) => {
 
 @Resolver(BoxingCardPack)
 export class BoxingGameResolver {
+    @Query(() => [BoxingCardPack])
+    async packs(): Promise<Maybe<Array<BoxingCardPack>>> {
+        return await BoxingCardPackModel.find();
+    }
+
     @FieldResolver()
     async cards(@Root() pack: DocumentType<BoxingCardPack>): Promise<Array<BoxingCardRates>> {
         const cardRefs = Array.from(pack.cards.keys());
@@ -71,6 +86,8 @@ export class BoxingGameResolver {
         } else {
             cardRef = cards.at(index - 1);
         }
+
+        ctx.user.addCard(cardRef);
 
         const card = await BoxingCardModel.findById(cardRef);
 

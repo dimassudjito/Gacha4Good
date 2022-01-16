@@ -5,14 +5,17 @@ import {
     Authorized,
     Ctx,
     Field,
+    FieldResolver,
     InputType,
     Mutation,
     ObjectType,
     Query,
     Resolver,
+    Root,
     UnauthorizedError,
 } from "type-graphql";
-import { User, UserModel } from "../model/user";
+import { BoxingCardModel } from "../model/game";
+import { CardInventory, User, UserModel } from "../model/user";
 import { AuthorizedContext, TokenCache } from "./auth";
 
 @InputType()
@@ -40,7 +43,7 @@ class AuthorizedUser {
     }
 }
 
-@Resolver()
+@Resolver(User)
 export class UserResolver {
     @Query(() => User)
     async user(@Arg("id") id: string): Promise<DocumentType<User>> {
@@ -99,5 +102,44 @@ export class UserResolver {
         ctx.user.balance += value;
         await ctx.user.save();
         return new AuthorizedUser(ctx.user, ctx.token);
+    }
+
+    @Authorized()
+    @Mutation(() => AuthorizedUser)
+    async deleteCard(
+        @Ctx() ctx: AuthorizedContext,
+        @Arg("cardId") cardId: string,
+        @Arg("count") count: number
+    ) {
+        const card = await BoxingCardModel.findById(cardId);
+        if (ctx.user.inventory.has(card)) {
+            const newCount = ctx.user.inventory.get(card) - count;
+            ctx.user.inventory.set(card, newCount);
+        }
+        await ctx.user.save();
+        return new AuthorizedUser(ctx.user, ctx.token);
+    }
+
+    @FieldResolver()
+    async inventory(@Root() user: DocumentType<User>): Promise<Array<CardInventory>> {
+        if (!user.inventory) {
+            return [];
+        }
+
+        const cardRefs = Array.from(user.inventory.keys());
+        const cardCounts = Array.from(user.inventory.values());
+        const cardPromises = cardRefs.map((cardRef) => {
+            return BoxingCardModel.findById(cardRef);
+        });
+
+        const resolvedCards = await Promise.all(cardPromises);
+
+        let outputArray = [];
+
+        for (let i = 0; i < resolvedCards.length; i++) {
+            outputArray.push({ card: resolvedCards[i], rate: cardCounts[i] });
+        }
+
+        return outputArray;
     }
 }
