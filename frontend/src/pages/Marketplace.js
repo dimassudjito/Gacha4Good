@@ -14,9 +14,15 @@ import BoxerCard from "../components/boxerKing/BoxerCard";
 import Header from "../components/Header";
 
 const GET_PACKS = gql`
-    query Packs {
+    query GetPacks {
         packs {
             _id
+            name
+            price
+            cards {
+                card
+                rate
+            }
         }
     }
 `;
@@ -24,8 +30,8 @@ const GET_PACKS = gql`
 const Marketplace = () => {
     const { loading, error, data } = useQuery(GET_PACKS);
 
-    const pack = ["bronze pack", "silver pack", "gold pack"];
-    const price = ["1000", "5000", "20000"];
+    const packs = data.packs;
+
     const color = ["#CD7F32", "#C0C0C0", "#FFD700"];
 
     const [counter, setCounter] = useState(1);
