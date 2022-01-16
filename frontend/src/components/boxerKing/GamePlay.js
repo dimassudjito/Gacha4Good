@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 
-import { Box, Typography, Card, Button, Grid, CardContent } from '@mui/material'
+import { Box, Typography, Card, Button, Grid } from '@mui/material'
 
 import BoxerCard from './BoxerCard'
 import BoxerHead from './BoxerHead'
@@ -10,16 +10,18 @@ const GamePlay = ({ boxers }) => {
   const [p1] = useState(boxers[0])
   const [p2] = useState(boxers[1])
   // gameplay data
-  const [p1Game, setP1Game] = useState({ hp: p1.hp, move: null })
-  const [p2Game, setP2Game] = useState({ hp: p2.hp, move: null })
+  const [p1Move, setP1Move] = useState(null)
+  const [p2Move, setP2Move] = useState(null)
+  const [p1Hp, setP1Hp] = useState(p1.hp)
+  const [p2Hp, setP2Hp] = useState(p2.hp)
 
   const makeMove = (move) => {
-    // update p1Game
-    setP1Game({ ...p1Game, move })
+    // update p1Move
+    setP1Move(move)
     // make move for bot
-    setP2Game({ ...p2Game, move: 'scissor' })
+    setP2Move('paper')
     // evaluate game
-    let winner = evaluateMove(p1Game.move, p2Game.move)
+    let winner = evaluateMove(p1Move, p2Move)
     // adjust health point
     modifyHp(winner)
   }
@@ -30,8 +32,7 @@ const GamePlay = ({ boxers }) => {
 
   const modifyHp = (winner) => {
     if (winner === 'p1') {
-      const newHp = p2Game.hp - p1.power
-      setP2Game({ ...p2Game, hp: newHp })
+      setP2Hp(p2Hp - p1.power)
     }
   }
 
@@ -41,17 +42,19 @@ const GamePlay = ({ boxers }) => {
         <Grid item xs={6}>
           <Card>
             <Typography>Player 1 (Human)</Typography>
-            <Typography>HP: {p1Game.hp}</Typography>
+            <Typography>HP: {p1Hp}</Typography>
             <hr />
             <BoxerHead boxer={p1} />
+            <Typography>{p1Move}</Typography>
           </Card>
         </Grid>
         <Grid item xs={6}>
           <Card>
             <Typography>Player 2 (Bot)</Typography>
-            <Typography>HP: {p2Game.hp}</Typography>
+            <Typography>HP: {p2Hp}</Typography>
             <hr />
             <BoxerHead boxer={p2} />
+            <Typography>{p2Move}</Typography>
           </Card>
         </Grid>
       </Grid>
