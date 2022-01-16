@@ -78,7 +78,7 @@ const Marketplace = () => {
                     <Box>
                         <Dialog open={open}>
                             <DialogTitle>Confirm Purchase</DialogTitle>
-                            <DialogContent>Price: {price[counter]}</DialogContent>
+                            <DialogContent>Price:</DialogContent>
                             <Button
                                 onClick={() => {
                                     setOpen(false);
@@ -108,10 +108,7 @@ const Marketplace = () => {
                                             variant="outlined"
                                             style={{ backgroundColor: color[counter] }}
                                         >
-                                            <Typography align="center">
-                                                {" "}
-                                                {pack[counter]}{" "}
-                                            </Typography>
+                                            <Typography align="center"></Typography>
                                         </Card>
                                     </div>
                                 </Grid>
