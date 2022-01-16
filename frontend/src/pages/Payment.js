@@ -20,10 +20,13 @@ class Payment extends React.Component {
     }
     render() {
         return (
-            <PayPalButton
-                createOrder={(data, actions) => this.createOrder(data, actions)}
-                onApprove={(data, actions) => this.onApprove(data, actions)}
-            />
+            <div>
+                <Header />
+                <PayPalButton
+                    createOrder={(data, actions) => this.createOrder(data, actions)}
+                    onApprove={(data, actions) => this.onApprove(data, actions)}
+                />
+            </div>
         );
     }
 }
