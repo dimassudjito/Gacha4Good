@@ -100,9 +100,11 @@ export class BoxingGameResolver {
     }
 
     @FieldResolver()
-    async cards(@Root() pack: DocumentType<BoxingCardPack>): Promise<Array<BoxingCard>> {
+    async cards(
+        @Root() pack: DocumentType<BoxingCardPack>
+    ): Promise<Array<DocumentType<BoxingCard>>> {
         const cardPromises = pack.cards.map((cardRef) => {
-            return BoxingCardModel.findById(cardRef);
+            return BoxingCardModel.findById(cardRef.card);
         });
 
         const resolvedCards = await Promise.all(cardPromises);

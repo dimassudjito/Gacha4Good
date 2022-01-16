@@ -4,60 +4,55 @@
 # -----------------------------------------------
 
 type AuthorizedUser {
-  token: String!
-  user: User!
+    token: String!
+    user: User!
 }
 
 type BoxingCard {
-  _id: ID!
-  attackPower: Int!
-  cardPicture: String!
-  headPicture: String!
-  healthPoints: Int!
-  name: String!
+    _id: ID!
+    attackPower: Int!
+    cardPicture: String!
+    headPicture: String!
+    healthPoints: Int!
+    name: String!
 }
 
 type BoxingCardPack {
-  _id: ID!
-  cards: [BoxingCardRates!]!
-  name: String!
-  price: Int!
-}
-
-type BoxingCardRates {
-  card: ID!
-  rate: Int!
+    _id: ID!
+    cards: [BoxingCard!]!
+    name: String!
+    price: Int!
 }
 
 type Mutation {
-  addBalance(userId: String!, value: Float!): User!
-  buyPack(packId: String!, userId: String!): BoxingCard!
-  createBoxer(boxerData: NewBoxingCard!): BoxingCard!
-  login(password: String!, username: String!): AuthorizedUser!
-  newUser(newUserData: NewUserInput!): AuthorizedUser!
+    addBalance(userId: String!, value: Float!): User!
+    buyPack(packId: String!, userId: String!): BoxingCard!
+    createBoxer(boxerData: NewBoxingCard!): BoxingCard!
+    login(password: String!, username: String!): AuthorizedUser!
+    newUser(newUserData: NewUserInput!): AuthorizedUser!
 }
 
 input NewBoxingCard {
-  attackPower: Int!
-  cardPicture: String!
-  headPicture: String!
-  healthPoints: Int!
-  name: String!
+    attackPower: Int!
+    cardPicture: String!
+    headPicture: String!
+    healthPoints: Int!
+    name: String!
 }
 
 input NewUserInput {
-  password: String!
-  username: String!
+    password: String!
+    username: String!
 }
 
 type Query {
-  packs: [BoxingCardPack!]!
-  user(id: String!): User!
+    packs: [BoxingCardPack!]!
+    user(id: String!): User!
 }
 
 type User {
-  _id: ID!
-  balance: Int!
-  inventory: [BoxingCard!]!
-  username: String!
+    _id: ID!
+    balance: Int!
+    inventory: [BoxingCard!]!
+    username: String!
 }

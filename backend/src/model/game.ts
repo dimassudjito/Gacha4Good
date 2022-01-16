@@ -53,7 +53,7 @@ export class BoxingCardPack {
     @prop({ required: true })
     public price!: number;
 
-    @Field(() => [BoxingCardRates])
+    @Field(() => [BoxingCard])
     @prop({ required: true })
     public cards!: Array<BoxingCardRates>;
 }
