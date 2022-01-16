@@ -43,6 +43,9 @@ export class User {
         password: string
     ): Promise<DocumentType<User>> {
         const user = await UserModel.findOne({ username: username });
+        if (!user) {
+            throw new UserInputError("Incorrect username or password");
+        }
         if (await compare(password, user.password)) {
             return user;
         }

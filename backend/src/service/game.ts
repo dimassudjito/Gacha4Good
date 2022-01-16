@@ -86,8 +86,7 @@ export class BoxingGameResolver {
             throw new UserInputError("Can't afford card");
         }
 
-        const weights = Array.from(cardPack.cards.values());
-        const cards = Array.from(cardPack.cards.keys());
+        const weights = Array.from(cardPack.cards, (pair) => pair.rate);
 
         let sum = 0;
         const prefixSum = weights.map<number>((x) => (sum = sum + x));
@@ -100,11 +99,11 @@ export class BoxingGameResolver {
         let cardRef: Ref<BoxingCard>;
 
         if (index === -1) {
-            cardRef = cards.at(index);
+            cardRef = cardPack.cards.at(index).card;
         } else if (index === 0) {
-            cardRef = cards.at(0);
+            cardRef = cardPack.cards.at(0).card;
         } else {
-            cardRef = cards.at(index - 1);
+            cardRef = cardPack.cards.at(index - 1).card;
         }
 
         ctx.user.addCard(cardRef);

@@ -25,7 +25,7 @@ type BoxingCardPack {
 }
 
 type BoxingCardRates {
-  card: BoxingCard!
+  card: ID!
   rate: Float!
 }
 

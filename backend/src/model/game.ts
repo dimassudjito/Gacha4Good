@@ -29,8 +29,11 @@ export class BoxingCard {
 
 @ObjectType()
 export class BoxingCardRates {
-    @Field()
-    public card: BoxingCard;
+    @prop()
+    @Field(() => ID)
+    public card: Ref<BoxingCard>;
+
+    @prop()
     @Field()
     public rate: number;
 }
@@ -40,7 +43,6 @@ export const BoxingCardModel = getModelForClass(BoxingCard);
 @ObjectType()
 export class BoxingCardPack {
     @Field(() => ID)
-    @prop({ required: true })
     public _id!: mongoose.Types.ObjectId;
 
     @Field()
@@ -52,8 +54,8 @@ export class BoxingCardPack {
     public price!: number;
 
     @Field(() => [BoxingCardRates])
-    @prop({ required: true, ref: () => BoxingCard })
-    public cards!: Map<Ref<BoxingCard>, number>;
+    @prop({ required: true })
+    public cards!: Array<BoxingCardRates>;
 }
 
 export const BoxingCardPackModel = getModelForClass(BoxingCardPack);
