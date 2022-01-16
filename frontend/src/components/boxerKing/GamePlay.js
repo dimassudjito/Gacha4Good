@@ -1,7 +1,16 @@
 import { Box, Button, ButtonGroup, Card, Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { gql, useMutation } from "@apollo/client";
 import BoxerCard from "./BoxerCard";
 import BoxerHead from "./BoxerHead";
+
+const ADD_BALANCE = gql`
+    mutation AddBalance($value: Float!, $userId: String!) {
+        addBalance(value: $value, userId: $userId) {
+            balance
+        }
+    }
+`;
 
 const GamePlay = ({ boxers, boxer }) => {
     // general card data
@@ -13,6 +22,9 @@ const GamePlay = ({ boxers, boxer }) => {
     const [p1Hp, setP1Hp] = useState(p1.healthPoints);
     const [p2Hp, setP2Hp] = useState(p2.healthPoints);
     const [winner, setWinner] = useState(null);
+
+    // add balance mutation
+    const [addBalance, { data, loading, error }] = useMutation(ADD_BALANCE);
 
     const makeMove = (move1) => {
         let move2 = createBoxMove();
@@ -84,7 +96,12 @@ const GamePlay = ({ boxers, boxer }) => {
 
     useEffect(() => {
         if (winner === "Player 1") {
-            console.log("tset");
+            addBalance({
+                variables: {
+                    value: 500,
+                    userId: "61e45a528161a89ca544a398",
+                },
+            });
         }
     }, [winner]);
 
