@@ -6,19 +6,16 @@
     "configurations": [
         {
             "type": "node",
-            "runtimeArgs": [
-                "--experimental-specifier-resolution=node"
-            ],
             "request": "launch",
             "name": "Launch Program",
+            "runtimeArgs": [
+                "-r",
+                "ts-node/register"
+            ],
             "skipFiles": [
                 "<node_internals>/**"
             ],
             "program": "${workspaceFolder}/src/index.ts",
-            "preLaunchTask": "tsc: build - tsconfig.json",
-            "outFiles": [
-                "${workspaceFolder}/dist/**/*.js"
-            ]
         }
     ]
 }

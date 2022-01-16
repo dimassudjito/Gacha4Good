@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "description": "",
     "scripts": {
-        "run": "tsc && node ./build/index.ts"
+        "run": "ts-node ./src/index.ts"
     },
     "author": "",
     "license": "ISC",
@@ -24,6 +24,7 @@
         "jsonwebtoken": "^8.5.1",
         "mongoose": "~6.1.6",
         "reflect-metadata": "^0.1.13",
+        "ts-node": "^10.4.0",
         "type-graphql": "^1.1.1"
     }
 }
