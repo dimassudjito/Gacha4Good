@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 
 import { Container, Box } from '@mui/material'
 
-// import ChooseBoxer from '../components/boxerKing/ChooseBoxer'
+import ChooseBoxer from '../components/boxerKing/ChooseBoxer'
+import GamePlay from '../components/boxerKing/GamePlay'
 
 const dummyBoxerData = [
   {
@@ -25,7 +26,7 @@ const BoxerKing = () => {
   return (
     <Box>
       <Container maxWidth="md">
-        {/* <ChooseBoxer boxers={dummyBoxerData} /> */}
+        {true ? <GamePlay boxers={boxers} /> : <ChooseBoxer boxers={boxers} />}
       </Container>
     </Box>
   )
