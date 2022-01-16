@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import IconButton from '@mui/material/IconButton';
-import AccountCircle from '@mui/icons-material/AccountCircle';
-import AddCircleIcon from '@mui/icons-material/AddCircle';
-import Coin from '../../pages/Coin'
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import IconButton from "@mui/material/IconButton";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import AddCircleIcon from "@mui/icons-material/AddCircle";
+import Coin from "../../pages/Coin";
 import { Link } from "react-router-dom";
 
 const Header = () => {
@@ -54,8 +54,13 @@ const Header = () => {
                     </Link>
                     <Box>
                         <Link to="/">
-                            <Typography align="center" variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                                GACHA4GOOD
+                            <Typography
+                                align="center"
+                                variant="h4"
+                                component="div"
+                                sx={{ flexGrow: 1, color: "secondary.main" }}
+                            >
+                                Gacha4Good
                             </Typography>
                         </Link>
                     </Box>
@@ -76,8 +81,8 @@ const Header = () => {
                     )}
                 </Toolbar>
             </AppBar>
-        </Box >
+        </Box>
     );
-}
+};
 
-export default Header
+export default Header;

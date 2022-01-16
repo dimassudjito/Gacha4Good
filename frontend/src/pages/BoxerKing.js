@@ -4,6 +4,7 @@ import { Container, Box } from "@mui/material";
 
 import ChooseBoxer from "../components/boxerKing/ChooseBoxer";
 import GamePlay from "../components/boxerKing/GamePlay";
+import Header from "../components/boxerKing/Header";
 
 const dummyBoxerData = [
     {
@@ -48,6 +49,7 @@ const BoxerKing = () => {
 
     return (
         <Box>
+            <Header />
             <Container maxWidth="md">
                 {boxer ? (
                     <GamePlay boxers={boxers} boxer={boxer} />
