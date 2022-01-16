@@ -2,7 +2,6 @@ import { DocumentType } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server-core";
 import {
     Arg,
-    Authorized,
     Ctx,
     Field,
     FieldResolver,
@@ -56,7 +55,6 @@ export class UserResolver {
         return user;
     }
 
-    @Authorized()
     @Mutation(() => Boolean)
     async logout(@Ctx() ctx: AuthorizedContext): Promise<boolean> {
         try {
@@ -102,12 +100,13 @@ export class UserResolver {
         return new AuthorizedUser(newUser, token);
     }
 
-    @Authorized()
-    @Mutation(() => AuthorizedUser)
-    async addBalance(@Ctx() ctx: AuthorizedContext, @Arg("value") value: number) {
-        ctx.user.balance += value;
-        await ctx.user.save();
-        return new AuthorizedUser(ctx.user, ctx.token);
+    @Mutation(() => User)
+    async addBalance(@Arg("userId") userId: string, @Arg("value") value: number) {
+        const user = await UserModel.findById(userId);
+
+        user.balance += value;
+        await user.save();
+        return user;
     }
 
     @FieldResolver()

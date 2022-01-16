@@ -1,18 +1,8 @@
 import { DocumentType, Ref } from "@typegoose/typegoose";
 import { ApolloError, UserInputError } from "apollo-server";
-import {
-    Arg,
-    Authorized,
-    Ctx,
-    Field,
-    InputType,
-    Maybe,
-    Mutation,
-    Query,
-    Resolver,
-} from "type-graphql";
+import { Arg, Field, InputType, Maybe, Mutation, Query, Resolver } from "type-graphql";
 import { BoxingCard, BoxingCardModel, BoxingCardPack, BoxingCardPackModel } from "../model/game";
-import { AuthorizedContext } from "./auth";
+import { UserModel } from "../model/user";
 
 const randBetween = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
@@ -43,19 +33,19 @@ export class BoxingGameResolver {
         return await BoxingCardPackModel.find();
     }
 
-    @Authorized()
     @Mutation(() => BoxingCard)
     async buyPack(
-        @Ctx() ctx: AuthorizedContext,
+        @Arg("userId") userId: string,
         @Arg("packId") packId: string
     ): Promise<DocumentType<BoxingCard>> {
         const cardPack = await BoxingCardPackModel.findById(packId);
+        const user = await UserModel.findById(userId);
 
         if (!cardPack) {
             throw new UserInputError("Invalid packId");
         }
 
-        if (ctx.user.balance - cardPack.price < 0) {
+        if (user.balance - cardPack.price < 0) {
             throw new UserInputError("Can't afford card");
         }
 
@@ -79,7 +69,7 @@ export class BoxingGameResolver {
             cardRef = cardPack.cards.at(index - 1).card;
         }
 
-        ctx.user.addCard(cardRef);
+        user.addCard(cardRef);
 
         const card = await BoxingCardModel.findById(cardRef);
 
