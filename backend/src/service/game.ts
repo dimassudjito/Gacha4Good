@@ -1,6 +1,16 @@
 import { DocumentType, Ref } from "@typegoose/typegoose";
 import { ApolloError, UserInputError } from "apollo-server";
-import { Arg, Field, InputType, Maybe, Mutation, Query, Resolver } from "type-graphql";
+import {
+    Arg,
+    Field,
+    FieldResolver,
+    InputType,
+    Maybe,
+    Mutation,
+    Query,
+    Resolver,
+    Root,
+} from "type-graphql";
 import { BoxingCard, BoxingCardModel, BoxingCardPack, BoxingCardPackModel } from "../model/game";
 import { UserModel } from "../model/user";
 
@@ -86,5 +96,16 @@ export class BoxingGameResolver {
         await newCard.save();
 
         return newCard;
+    }
+
+    @FieldResolver()
+    async cards(@Root() pack: DocumentType<BoxingCardPack>): Promise<Array<BoxingCard>> {
+        const cardPromises = pack.cards.map((cardRef) => {
+            return BoxingCardModel.findById(cardRef);
+        });
+
+        const resolvedCards = await Promise.all(cardPromises);
+
+        return resolvedCards;
     }
 }
