@@ -4,23 +4,13 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const { UserInputError, addErrorLoggingToSchema } = require('apollo-server')
 
-const User = require('../../models/User')
-const {
-  validateRegisterInput,
-  validateLoginInput
-} = require('../../util/validators')
+//const User = require('../../models/User')
+//const {
+  //validateRegisterInput,
+  //validateLoginInput
+//} = require('../../util/validators')
 
-function generateToken(user) {
-  return jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-      name: user.name
-    },
-    SECRET_KEY,
-    { expiresIn: '1h' }
-  )
-}
+
 
 export const types = gql`
     type User {
@@ -84,6 +74,17 @@ export const types = gql`
         boxingKingSendMove(gameRoomId: ID!): GameRoom
     }
 `;
+function generateToken(user) {
+  return jwt.sign(
+    {
+      id: user.id,
+      email: user.email,
+      name: user.name
+    },
+    SECRET_KEY,
+    { expiresIn: '1h' }
+  )
+}
 
 let gameRoomCache = new Map();
 
