@@ -1,10 +1,7 @@
-import React from 'react'
+import React from "react";
 
 const Coin = () => {
-    return (
-        <h1> this is coin</h1>
-    )
-}
+    return <h1> this is coin</h1>;
+};
 
-
-export default Coin
+export default Coin;
