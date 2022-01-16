@@ -15,15 +15,12 @@ const GamePlay = ({ boxers }) => {
   const [p1Hp, setP1Hp] = useState(p1.hp)
   const [p2Hp, setP2Hp] = useState(p2.hp)
 
-  const makeMove = (move) => {
-    // update p1Move
-    setP1Move(move)
-    // make move for bot
+  const makeMove = (move1) => {
     let move2 = createBoxMove()
+    let winner = evaluateMove(move1, move2)
+    // update state
+    setP1Move(move1)
     setP2Move(move2)
-    // evaluate game
-    let winner = evaluateMove(p1Move, p2Move)
-    // adjust health point
     modifyHp(winner)
   }
 
