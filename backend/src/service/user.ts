@@ -5,13 +5,16 @@ import {
     Authorized,
     Ctx,
     Field,
+    FieldResolver,
     InputType,
     Mutation,
     ObjectType,
     Query,
     Resolver,
+    Root,
     UnauthorizedError,
 } from "type-graphql";
+import { BoxingCard, BoxingCardModel } from "../model/game";
 import { User, UserModel } from "../model/user";
 import { AuthorizedContext, TokenCache } from "./auth";
 
@@ -107,39 +110,18 @@ export class UserResolver {
         return new AuthorizedUser(ctx.user, ctx.token);
     }
 
-    // @Authorized()
-    // @Mutation(() => AuthorizedUser)
-    // async deleteCard(
-    //     @Ctx() ctx: AuthorizedContext,
-    //     @Arg("cardId") cardId: string,
-    //     @Arg("count") count: number
-    // ) {
-    //     // const card = await BoxingCardModel.findById(cardId);
+    @FieldResolver()
+    async inventory(@Root() user: DocumentType<User>): Promise<Array<BoxingCard>> {
+        if (!user.inventory) {
+            return [];
+        }
 
-    //     await ctx.user.save();
-    //     return new AuthorizedUser(ctx.user, ctx.token);
-    // }
+        const cardPromises = user.inventory.map((cardRef) => {
+            return BoxingCardModel.findById(cardRef);
+        });
 
-    // @FieldResolver()
-    // async inventory(@Root() user: DocumentType<User>): Promise<Array<Ref<BoxingCard>>> {
-    //     if (!user.inventory) {
-    //         return [];
-    //     }
+        const resolvedCards = await Promise.all(cardPromises);
 
-    //     const cardRefs = Array.from(user.inventory.keys());
-    //     const cardCounts = Array.from(user.inventory.values());
-    //     const cardPromises = cardRefs.map((cardRef) => {
-    //         return BoxingCardModel.findById(cardRef);
-    //     });
-
-    //     const resolvedCards = await Promise.all(cardPromises);
-
-    //     let outputArray = [];
-
-    //     for (let i = 0; i < resolvedCards.length; i++) {
-    //         outputArray.push({ card: resolvedCards[i], rate: cardCounts[i] });
-    //     }
-
-    //     return outputArray;
-    // }
+        return resolvedCards;
+    }
 }
