@@ -10,9 +10,11 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import React, { useEffect, useState } from "react";
 import Header from "../components/boxerKing/Header";
+import BoxerCard from "../components/boxerKing/BoxerCard";
+
 const Marketplace = () => {
     const pack = ["bronze pack", "silver pack", "gold pack"];
-    const price = ["5", "10", "15"];
+    const price = ["1000", "5000", "20000"];
     const color = ["#CD7F32", "#C0C0C0", "#FFD700"];
 
     const [counter, setCounter] = useState(1);
@@ -30,58 +32,78 @@ const Marketplace = () => {
         }
     }, [counter]);
     const [open, setOpen] = React.useState(false);
-    if (buying) {
-        return <Typography> card </Typography>;
-    }
     return (
         <Box>
             <Header />
-            <Grid justify="space-between" spacing={3} sx={{ mt: 20 }} container justifyContent="center" alignItems="center">
-                <Dialog open={open}>
-                    <DialogTitle>CONFIRM PURCHASE</DialogTitle>
-                    <DialogContent>Price: {price[counter]}</DialogContent>
-                    <Button
-                        onClick={() => {
-                            setOpen(false);
-                            setBuying(true);
+            <Grid
+                justify="space-between"
+                spacing={3}
+                sx={{ mt: 20 }}
+                container
+                justifyContent="center"
+                alignItems="center"
+            >
+                {buying ? (
+                    <BoxerCard
+                        boxer={{
+                            name: "Mike Tyson",
+                            hp: 100,
+                            power: 25,
+                            img: "https://cdn.vox-cdn.com/thumbor/LtQtXYaj-suLI0jKUBLE-Fx2O9s=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22127884/1288364271.jpg",
+                            head_img:
+                                "https://boxrec.com/media/images//thumb/9/94/MikeTysonHeadshot2.jpg/250px-MikeTysonHeadshot2.jpg",
                         }}
-                        variant="contained"
-                        style={{ backgroundColor: "#000000" }}
-                    >
-                        CONFIRM
-                    </Button>
-                </Dialog>
-                <Grid item>
-                    <Grid container>
-                        <Grid item>
-                            <IconButton onClick={() => setCounter(counter - 1)}>
-                                {" "}
-                                <ArrowBackIosNewIcon />
-                            </IconButton>
-                        </Grid>
-                        <Grid item>
-                            <Card
-                                sx={{ width: 200, height: 300 }}
-                                variant="outlined"
-                                style={{ backgroundColor: color[counter] }}
+                    ></BoxerCard>
+                ) : (
+                    <Box>
+                        <Dialog open={open}>
+                            <DialogTitle>Confirm Purchase</DialogTitle>
+                            <DialogContent>Price: {price[counter]}</DialogContent>
+                            <Button
+                                onClick={() => {
+                                    setOpen(false);
+                                    setBuying(true);
+                                }}
+                                variant="contained"
+                                style={{ backgroundColor: "#000000" }}
                             >
-                                <CardActionArea
-                                    onClick={() => {
-                                        setOpen(true);
-                                    }}
-                                >
-                                    <Typography align="center"> {pack[counter]} </Typography>
-                                </CardActionArea>
-                            </Card>
-                        </Grid>
+                                Confirm
+                            </Button>
+                        </Dialog>
                         <Grid item>
-                            <IconButton edge="end" onClick={() => setCounter(counter + 1)}>
-                                {" "}
-                                <ArrowForwardIosIcon />
-                            </IconButton>
+                            <Grid container alignItems="center">
+                                <Grid item>
+                                    <IconButton onClick={() => setCounter(counter - 1)}>
+                                        <ArrowBackIosNewIcon />
+                                    </IconButton>
+                                </Grid>
+                                <Grid item>
+                                    <div
+                                        onClick={() => {
+                                            setOpen(true);
+                                        }}
+                                    >
+                                        <Card
+                                            sx={{ width: 200, height: 300 }}
+                                            variant="outlined"
+                                            style={{ backgroundColor: color[counter] }}
+                                        >
+                                            <Typography align="center">
+                                                {" "}
+                                                {pack[counter]}{" "}
+                                            </Typography>
+                                        </Card>
+                                    </div>
+                                </Grid>
+                                <Grid item>
+                                    <IconButton edge="end" onClick={() => setCounter(counter + 1)}>
+                                        <ArrowForwardIosIcon />
+                                    </IconButton>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Grid>
-                </Grid>
+                    </Box>
+                )}
             </Grid>
         </Box>
     );
