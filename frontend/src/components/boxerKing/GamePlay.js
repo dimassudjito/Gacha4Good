@@ -3,30 +3,30 @@ import React, { useState } from 'react'
 import { Box, Typography, Card, Button } from '@mui/material'
 
 const GamePlay = () => {
-  const [P1Move, setP1Move] = useState([])
-  const [P2Move, setP2Move] = useState([])
+  const [P1Move, setP1Move] = useState(null)
+  const [P2Move, setP2Move] = useState(null)
   const [P1IsChoosing, setP1IsChoosing] = useState(true)
   const [P2IsChoosing, setP2IsChoosing] = useState(true)
 
   const makeP1Move = (move) => {
-    setP1Move((arr) => [...arr, move])
+    setP1Move(move)
     setP1IsChoosing(false)
   }
 
   const makeP2Move = (move) => {
-    setP2Move((arr) => [...arr, move])
+    setP2Move(move)
     setP2IsChoosing(false)
   }
 
   return (
     <Box>
-      <Card sx={{ mb: 2 }}>
+      {/* <Card sx={{ mb: 2 }}>
         <Typography>Debugging station</Typography>
         <Typography>Player 1: {P1Move}</Typography>
         <Typography>Player 2: {P2Move}</Typography>
-      </Card>
+      </Card> */}
       <Card sx={{ mb: 2 }}>
-        {P1Move.length === 0 || P1IsChoosing || P2IsChoosing ? (
+        {P1Move.length === null || P1IsChoosing || P2IsChoosing ? (
           <Typography>Make your move!</Typography>
         ) : (
           <Box>
