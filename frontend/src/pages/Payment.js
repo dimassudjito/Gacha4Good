@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import Header from "../components/Header";
 const PayPalButton = window.paypal.Buttons.driver("react", { React, ReactDOM });
 
 class Payment extends React.Component {
