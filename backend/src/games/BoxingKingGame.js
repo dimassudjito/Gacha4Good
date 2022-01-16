@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { Game, GameRoom } from "../models/Game.js";
 
-const GAME_ID = 1;
+export const BOXING_GAME_ID = "BoxingKing";
 
 const boxingKingGameAction = new mongoose.Schema({
     timestamp: Date,
@@ -62,4 +62,4 @@ class BoxingKingGameRoomClass {
 boxingKingGameRoomSchema.loadClass(BoxingKingGameRoomClass);
 
 export const BoxingKingGame = Game.discriminator("BoxingKing", boxingKingSchema);
-export const BoxingKingGameRoom = GameRoom.discriminator(GAME_ID, boxingKingGameRoomSchema);
+export const BoxingKingGameRoom = GameRoom.discriminator(BOXING_GAME_ID, boxingKingGameRoomSchema);
