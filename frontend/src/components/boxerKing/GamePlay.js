@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
-import { Box, Typography, Card, Button, Grid } from '@mui/material'
+import { Box, Typography, Card, Button, Grid, ButtonGroup } from '@mui/material'
 
 import BoxerCard from './BoxerCard'
 import BoxerHead from './BoxerHead'
@@ -14,6 +14,7 @@ const GamePlay = ({ boxers }) => {
   const [p2Move, setP2Move] = useState(null)
   const [p1Hp, setP1Hp] = useState(p1.hp)
   const [p2Hp, setP2Hp] = useState(p2.hp)
+  const [winner, setWinner] = useState(null)
 
   const makeMove = (move1) => {
     let move2 = createBoxMove()
@@ -75,6 +76,14 @@ const GamePlay = ({ boxers }) => {
     }
   }
 
+  useEffect(() => {
+    if (p1Hp <= 0) {
+      setWinner('Player 2')
+    } else if (p2Hp <= 0) {
+      setWinner('Player 1')
+    }
+  }, [p1Hp, p2Hp])
+
   return (
     <Box>
       <Grid container columnSpacing={1}>
@@ -110,33 +119,41 @@ const GamePlay = ({ boxers }) => {
           <BoxerCard boxer={p1} />
         </Grid>
         <Grid item xs={4}>
-          <Button
-            color="secondary"
-            variant="outlined"
-            onClick={() => {
-              makeMove('rock')
-            }}
-          >
-            Rock
-          </Button>
-          <Button
-            color="secondary"
-            variant="outlined"
-            onClick={() => {
-              makeMove('paper')
-            }}
-          >
-            Paper
-          </Button>
-          <Button
-            color="secondary"
-            variant="outlined"
-            onClick={() => {
-              makeMove('scissor')
-            }}
-          >
-            Scissor
-          </Button>
+          {winner ? (
+            <Typography variant="h4" color="secondary">
+              {winner} wins!
+            </Typography>
+          ) : (
+            <ButtonGroup>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  makeMove('rock')
+                }}
+              >
+                Rock
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  makeMove('paper')
+                }}
+              >
+                Paper
+              </Button>
+              <Button
+                color="secondary"
+                variant="outlined"
+                onClick={() => {
+                  makeMove('scissor')
+                }}
+              >
+                Scissor
+              </Button>
+            </ButtonGroup>
+          )}
         </Grid>
         <Grid item xs={4}>
           <BoxerCard boxer={p2} />
