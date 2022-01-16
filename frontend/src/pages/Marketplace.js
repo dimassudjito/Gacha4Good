@@ -55,17 +55,27 @@ const Marketplace = () => {
                     CONFIRM
                 </Button>
             </Dialog >
-            <Card variant="outlined" style={{ backgroundColor: color[counter] }}>
-                <CardActionArea onClick={() => {
-                    setOpen(true)
-                }}>
-                    <CardContent />
-                </CardActionArea>
-            </Card>
-            <IconButton onClick={() => setCounter(counter - 1)} > <ArrowBackIosNewIcon /></IconButton>
-            <p> {pack[counter]} </p>
-            <IconButton onClick={() => setCounter(counter + 1)}> <ArrowForwardIosIcon /></IconButton>
+            <Grid item>
+                <Grid container>
+                    <Grid item><IconButton onClick={() => setCounter(counter - 1)} > <ArrowBackIosNewIcon /></IconButton></Grid>
+                    <Grid item><Card sx={{ width: 200, height: 300 }} variant="outlined" style={{ backgroundColor: color[counter] }}>
+                        <CardActionArea onClick={() => {
+                            setOpen(true)
+                        }}>
+                            <Typography align="center"> {pack[counter]} </Typography>
+                        </CardActionArea>
+
+                    </Card>
+                    </Grid>
+                    <Grid item ><IconButton edge="end" onClick={() => setCounter(counter + 1)}> <ArrowForwardIosIcon /></IconButton></Grid>
+
+                </Grid>
+
+            </Grid>
+
+
         </Grid>
+
     )
 }
 
