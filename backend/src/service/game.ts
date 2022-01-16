@@ -2,17 +2,18 @@ import { DocumentType, Ref } from "@typegoose/typegoose";
 import { ApolloError, UserInputError } from "apollo-server";
 import {
     Arg,
-    Authorized,
-    Ctx,
     Field,
+    FieldResolver,
     InputType,
+    Int,
     Maybe,
     Mutation,
     Query,
     Resolver,
+    Root,
 } from "type-graphql";
 import { BoxingCard, BoxingCardModel, BoxingCardPack, BoxingCardPackModel } from "../model/game";
-import { AuthorizedContext } from "./auth";
+import { UserModel } from "../model/user";
 
 const randBetween = (min: number, max: number) => {
     return Math.random() * (max - min) + min;
@@ -23,10 +24,10 @@ export class NewBoxingCard {
     @Field()
     public name!: string;
 
-    @Field()
+    @Field(() => Int)
     public healthPoints!: number;
 
-    @Field()
+    @Field(() => Int)
     public attackPower!: number;
 
     @Field()
@@ -43,19 +44,19 @@ export class BoxingGameResolver {
         return await BoxingCardPackModel.find();
     }
 
-    @Authorized()
     @Mutation(() => BoxingCard)
     async buyPack(
-        @Ctx() ctx: AuthorizedContext,
+        @Arg("userId") userId: string,
         @Arg("packId") packId: string
     ): Promise<DocumentType<BoxingCard>> {
         const cardPack = await BoxingCardPackModel.findById(packId);
+        const user = await UserModel.findById(userId);
 
         if (!cardPack) {
             throw new UserInputError("Invalid packId");
         }
 
-        if (ctx.user.balance - cardPack.price < 0) {
+        if (user.balance - cardPack.price < 0) {
             throw new UserInputError("Can't afford card");
         }
 
@@ -79,7 +80,7 @@ export class BoxingGameResolver {
             cardRef = cardPack.cards.at(index - 1).card;
         }
 
-        ctx.user.addCard(cardRef);
+        user.addCard(cardRef);
 
         const card = await BoxingCardModel.findById(cardRef);
 
@@ -96,5 +97,16 @@ export class BoxingGameResolver {
         await newCard.save();
 
         return newCard;
+    }
+
+    @FieldResolver()
+    async cards(@Root() pack: DocumentType<BoxingCardPack>): Promise<Array<BoxingCard>> {
+        const cardPromises = pack.cards.map((cardRef) => {
+            return BoxingCardModel.findById(cardRef);
+        });
+
+        const resolvedCards = await Promise.all(cardPromises);
+
+        return resolvedCards;
     }
 }

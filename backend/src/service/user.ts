@@ -2,8 +2,6 @@ import { DocumentType } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server-core";
 import {
     Arg,
-    Authorized,
-    Ctx,
     Field,
     FieldResolver,
     InputType,
@@ -16,7 +14,6 @@ import {
 } from "type-graphql";
 import { BoxingCard, BoxingCardModel } from "../model/game";
 import { User, UserModel } from "../model/user";
-import { AuthorizedContext, TokenCache } from "./auth";
 
 @InputType()
 class NewUserInput {
@@ -56,18 +53,6 @@ export class UserResolver {
         return user;
     }
 
-    @Authorized()
-    @Mutation(() => Boolean)
-    async logout(@Ctx() ctx: AuthorizedContext): Promise<boolean> {
-        try {
-            TokenCache.delete(ctx.token);
-        } catch (ex) {
-            console.log(ex);
-            return false;
-        }
-        return true;
-    }
-
     @Mutation(() => AuthorizedUser)
     async login(
         @Arg("username") username: string,
@@ -77,7 +62,6 @@ export class UserResolver {
             const user = await UserModel.findByPassword(username, password);
             const token = await User.generateToken(user);
 
-            TokenCache.set(token, user);
             return new AuthorizedUser(user, token);
         } catch (ex) {
             console.log(ex);
@@ -97,17 +81,17 @@ export class UserResolver {
         await newUser.save();
 
         const token = await User.generateToken(newUser);
-        TokenCache.set(token, newUser);
 
         return new AuthorizedUser(newUser, token);
     }
 
-    @Authorized()
-    @Mutation(() => AuthorizedUser)
-    async addBalance(@Ctx() ctx: AuthorizedContext, @Arg("value") value: number) {
-        ctx.user.balance += value;
-        await ctx.user.save();
-        return new AuthorizedUser(ctx.user, ctx.token);
+    @Mutation(() => User)
+    async addBalance(@Arg("userId") userId: string, @Arg("value") value: number) {
+        const user = await UserModel.findById(userId);
+
+        user.balance += value;
+        await user.save();
+        return user;
     }
 
     @FieldResolver()

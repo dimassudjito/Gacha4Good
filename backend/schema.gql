@@ -30,8 +30,8 @@ type BoxingCardRates {
 }
 
 type Mutation {
-  addBalance(value: Float!): AuthorizedUser!
-  buyPack(packId: String!): BoxingCard!
+  addBalance(userId: String!, value: Float!): User!
+  buyPack(packId: String!, userId: String!): BoxingCard!
   createBoxer(boxerData: NewBoxingCard!): BoxingCard!
   login(password: String!, username: String!): AuthorizedUser!
   logout: Boolean!

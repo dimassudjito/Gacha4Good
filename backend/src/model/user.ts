@@ -1,16 +1,14 @@
 import { DocumentType, getModelForClass, mongoose, prop, Ref } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server";
 import { sign } from "jsonwebtoken";
-import { Authorized, Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 import { BoxingCard } from "./game";
 
 @ObjectType()
 export class User {
-    @Authorized()
     @Field(() => ID)
     public _id!: mongoose.Types.ObjectId;
 
-    @Authorized()
     @Field()
     @prop({ required: true })
     public username!: string;
@@ -18,12 +16,10 @@ export class User {
     @prop({ required: true })
     public password!: string;
 
-    @Authorized()
-    @Field()
+    @Field(() => Int)
     @prop({ required: true })
     public balance: number = 0;
 
-    @Authorized()
     @Field(() => [BoxingCard])
     @prop()
     public inventory?: Array<Ref<BoxingCard>>;
