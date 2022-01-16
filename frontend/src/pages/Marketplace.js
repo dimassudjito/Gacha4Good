@@ -30,14 +30,16 @@ const GET_PACKS = gql`
 const Marketplace = () => {
     const { loading, error, data } = useQuery(GET_PACKS);
 
-    const packs = data.packs;
-
     const color = ["#CD7F32", "#C0C0C0", "#FFD700"];
+    const color_name = ["bronze", "silver", "gold"]
+    const pack_price = ["1000", "10000", "25000"]
 
     const [counter, setCounter] = useState(1);
     const [buying, setBuying] = useState(false);
     const [open, setOpen] = React.useState(false);
-
+    // 0= silver, 1 = gold, 2 = bronze
+    // console.log(data.packs[0].price)
+    // console.log(data.packs[0].cards[0].card)
     const addCounter = (counter) => {
         setCounter(counter + 1);
     };
@@ -50,11 +52,15 @@ const Marketplace = () => {
             setCounter(2);
         }
     }, [counter]);
-
+    // if (loading) {
+    //     return 'Loading...'
+    // };
+    // if (error) {
+    //     return `Error! ${error.message}`
+    // }
     return (
         <Box>
             <Header />
-            <Typography color="secondary">test data:</Typography>
             <Grid
                 justify="space-between"
                 spacing={3}
@@ -78,7 +84,7 @@ const Marketplace = () => {
                     <Box>
                         <Dialog open={open}>
                             <DialogTitle>Confirm Purchase</DialogTitle>
-                            <DialogContent>Price:</DialogContent>
+                            <DialogContent>Price:{pack_price[counter]}</DialogContent>
                             <Button
                                 onClick={() => {
                                     setOpen(false);
@@ -119,6 +125,7 @@ const Marketplace = () => {
                                 </Grid>
                             </Grid>
                         </Grid>
+                        <Typography align="center" color="secondary"> {color_name[counter]}</Typography>
                     </Box>
                 )}
             </Grid>
