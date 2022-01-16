@@ -1,5 +1,5 @@
 import { getModelForClass, mongoose, prop, Ref } from "@typegoose/typegoose";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 
 @ObjectType()
 export class BoxingCard {
@@ -10,11 +10,11 @@ export class BoxingCard {
     @prop({ required: true })
     public name!: string;
 
-    @Field()
+    @Field(() => Int)
     @prop({ required: true })
     public healthPoints!: number;
 
-    @Field()
+    @Field(() => Int)
     @prop({ required: true })
     public attackPower!: number;
 
@@ -34,7 +34,7 @@ export class BoxingCardRates {
     public card: Ref<BoxingCard>;
 
     @prop()
-    @Field()
+    @Field(() => Int)
     public rate: number;
 }
 
@@ -49,7 +49,7 @@ export class BoxingCardPack {
     @prop({ required: true })
     public name!: string;
 
-    @Field()
+    @Field(() => Int)
     @prop({ required: true })
     public price!: number;
 

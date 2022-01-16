@@ -1,7 +1,7 @@
 import { DocumentType, getModelForClass, mongoose, prop, Ref } from "@typegoose/typegoose";
 import { UserInputError } from "apollo-server";
 import { sign } from "jsonwebtoken";
-import { Field, ID, ObjectType } from "type-graphql";
+import { Field, ID, Int, ObjectType } from "type-graphql";
 import { BoxingCard } from "./game";
 
 @ObjectType()
@@ -16,7 +16,7 @@ export class User {
     @prop({ required: true })
     public password!: string;
 
-    @Field()
+    @Field(() => Int)
     @prop({ required: true })
     public balance: number = 0;
 
